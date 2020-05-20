@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00acb6</color>
+    <color name="colorPrimaryDark">#007c83</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccentDark">#ab154c</color>
+
+
+    <color name="theamcolor_lite">#00d1dd</color>
+    <color name="theamcolor_lite_2">#11f2ff</color>
+
+
+    <color name="theamcolor">#00ACB6</color>
+    <color name="theamcolor_dark_level1">#0099a2</color>
+
+    <color name="babypowder">#FEFEFA</color>
+    <color name="textcolor0">#252527</color>
+    <color name="textcolor1">#2F2F31</color>
+    <color name="textcolor2">#3d3d3f</color>
+    <color name="textcolor3">#8a8a8b</color>
+    <color name="textcolor4">#b1b1b2</color>
+    <color name="textcolor5">#d8d8d8</color>
+
+    <color name="colorRed">#e74c3c</color>
+
+
+
+
+
+    <color name="background_color_1">#ebebeb</color>
+
+    <color name="edittext_background">#00000000</color>
+</resources>

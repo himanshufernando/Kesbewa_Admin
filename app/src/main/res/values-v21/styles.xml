@@ -1,0 +1,39 @@
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/theamcolor</item>
+
+    </style>
+
+
+
+
+    <style name="AppTheme.NoActionBarTransGreen">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/theamcolor</item>
+    </style>
+
+    <style name="CardViewStyle" parent="android:Widget.TextView">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardUseCompatPadding">false</item>
+    </style>
+
+    <style name="Base.Theme.MaterialComponents.CompactMenu">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.AppTheme.NavDrawerItem" parent="Base.Theme.MaterialComponents.CompactMenu">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+
+
+
+
+</resources>

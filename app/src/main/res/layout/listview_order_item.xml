@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="orderitem"
+            type="tkhub.project.kesbewa.admin.data.models.CartItem" />
+
+    </data>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_cart_product"
+                android:layout_width="120dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="120dp"
+                app:setOrderItemImage="@{orderitem.pro_image}"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="@{orderitem.pro_name}"
+                android:textColor="@color/textcolor0"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_medium"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_cart_product"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Bag" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{orderitem.pro_code}"
+                android:textColor="@color/textcolor0"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview1"
+                app:layout_constraintStart_toEndOf="@+id/img_cart_product"
+                tools:text="Bag" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                tools:text="250"
+                android:text="@{Double.toString(orderitem.pro_total_price) + ` LKR`}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_medium"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/textcolor0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+               />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview2"
+                android:text="Size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_light"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/img_cart_product"
+                app:layout_constraintTop_toBottomOf="@+id/textview11"
+                android:layout_marginStart="10dp"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview3"
+                android:text="@{orderitem.pro_size}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="M"
+                app:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview11" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview4"
+                android:text="Color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_light"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/img_cart_product"
+                app:layout_constraintTop_toBottomOf="@+id/textview2"
+                android:layout_marginStart="10dp"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview5"
+                android:text="@{orderitem.pro_colour}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="Green"
+                app:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview2" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview6"
+                android:text="Quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_light"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/img_cart_product"
+                app:layout_constraintTop_toBottomOf="@+id/textview4"
+                android:layout_marginStart="10dp"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview7"
+                android:text="@{Integer.toString(orderitem.pro_total_qty)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="55"
+                app:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/textcolor2"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview5" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

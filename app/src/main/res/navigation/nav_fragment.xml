@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_fragment"
+    app:startDestination="@id/fragment_main">
+
+
+    <fragment
+        android:id="@+id/fragment_main"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.MainFragment"
+        android:label="Fragment Main"
+        tools:layout="@layout/fragment_main">
+
+
+        <action
+            android:id="@+id/fragmentMainToLogin"
+            app:destination="@id/fragment_login"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/fragmentMainToHome"
+            app:destination="@id/fragment_home"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.HomeFragment"
+        android:label="Fragment Home"
+        tools:layout="@layout/fragment_home">
+
+
+        <action
+            android:id="@+id/fragmentHomeToMap"
+            app:destination="@id/fragment_map"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/fragmentMainToPast"
+            app:destination="@id/fragment_past"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.LoginFragment"
+        android:label="Fragment Login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/fragmentLoginToHome"
+            app:destination="@id/fragment_home"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_map"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.MapFragment"
+        android:label="Fragment Map"
+        tools:layout="@layout/fragment_map">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_past"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.PastOrdersFragment"
+        android:label="Fragment Past Orders"
+        tools:layout="@layout/fragment_past_orders">
+
+
+        <action
+            android:id="@+id/fragmentPastToHome"
+            app:destination="@id/fragment_home"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/fragmentPastToMap"
+            app:destination="@id/fragment_map"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+</navigation>

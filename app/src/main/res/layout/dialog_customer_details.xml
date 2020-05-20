@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_dialog"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/imageview_customer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_logo"
+            android:layout_alignParentRight="true"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="NAME"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/appCompatTextView1"
+            android:layout_toRightOf="@+id/appCompatTextView1"
+            android:layout_toStartOf="@+id/imageview_customer"
+            android:layout_alignTop="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:textColor="@color/textcolor2"
+            android:textSize="16sp"
+            tools:text="Himanshu"
+            android:layout_toLeftOf="@+id/imageview_customer" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/appCompatTextView2"
+            android:layout_alignStart="@+id/appCompatTextView1"
+            android:layout_alignLeft="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="PHONE"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/appCompatTextView3"
+            android:layout_toRightOf="@+id/appCompatTextView3"
+            android:layout_alignTop="@+id/appCompatTextView3"
+            android:fontFamily="@font/diavlo_medium"
+            android:textColor="@color/textcolor2"
+            android:textSize="16sp"
+            tools:text="0716607485" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/appCompatTextView4"
+            android:layout_alignStart="@+id/appCompatTextView1"
+            android:layout_alignLeft="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="EMAIL"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/appCompatTextView5"
+            android:layout_toRightOf="@+id/appCompatTextView5"
+            android:layout_toStartOf="@+id/imageview_customer"
+            android:layout_alignTop="@+id/appCompatTextView5"
+            android:fontFamily="@font/diavlo_medium"
+            android:textColor="@color/textcolor2"
+            android:textSize="16sp"
+            tools:text="Himanshu"
+            android:layout_toLeftOf="@+id/imageview_customer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/appCompatTextView6"
+            android:layout_alignStart="@+id/appCompatTextView1"
+            android:layout_alignLeft="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="NIC"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/appCompatTextView7"
+            android:layout_toRightOf="@+id/appCompatTextView7"
+            android:layout_alignTop="@+id/appCompatTextView7"
+            android:fontFamily="@font/diavlo_medium"
+            android:textColor="@color/textcolor2"
+            android:textSize="16sp"
+            tools:text="123456789456" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/appCompatTextView7"
+            android:layout_alignStart="@+id/appCompatTextView1"
+            android:layout_alignLeft="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="CODE"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/appCompatTextView9"
+            android:layout_toRightOf="@+id/appCompatTextView9"
+            android:layout_alignTop="@+id/appCompatTextView9"
+            android:fontFamily="@font/diavlo_medium"
+            android:textColor="@color/textcolor2"
+            android:textSize="16sp"
+            tools:text="123456789456" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/appCompatTextView10"
+            android:layout_alignStart="@+id/appCompatTextView1"
+            android:layout_alignLeft="@+id/appCompatTextView1"
+            android:fontFamily="@font/diavlo_medium"
+            android:text="ORDER HISTORY"
+            android:textColor="@color/textcolor3"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_customer_past_orders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_animation_fall_down"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_below="@+id/appCompatTextView11"
+            tools:layout_height="100dp"
+            tools:visibility="visible"
+            tools:listitem="@layout/listview_order_item" />
+
+
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

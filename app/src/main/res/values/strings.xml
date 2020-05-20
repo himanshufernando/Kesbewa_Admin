@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Kesbewa Admin</string>
+    <string name="default_notification_channel_id">1001</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Past</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_product">Products</string>
+    <string name="home_second">Home Second</string>
+
+
+    <string name="viewpager_new_orders">NEW</string>
+    <string name="viewpager_new_confirmed_orders">CONFIRMED</string>
+    <string name="viewpager_packed_orders">PACKED</string>
+    <string name="viewpager_delivery_orders">DELIVERY</string>
+    <string name="viewpager_delivered_orders">DELIVERED</string>
+
+    <string name="viewpager_complete_orders">COMPLETE</string>
+    <string name="viewpager_reject_orders">REJECT</string>
+
+
+    <string name="tst">"deliveryAddress.user_address_numberasassasssddsdsdsdsdsdsdsdsdsdsdsdsd"+ " ," +"deliveryAddress.user_address_one" + ", "+ "\n"
+    + "deliveryAddress.user_address_two" + ", "+ "\n"
+    + "deliveryAddress.user_address_city" + ", "+ "\n"
+    + "deliveryAddress.user_address_district"</string>
+
+
+</resources>
