@@ -1,5 +1,9 @@
 package tkhub.project.kesbewa.admin.ui.activity
 
+import android.Manifest
+import android.Manifest.permission.CALL_PHONE
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
@@ -25,6 +32,11 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
     lateinit var navController: NavController
     lateinit var navView: NavigationView
 
+    companion object {
+        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 35
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(
@@ -39,14 +51,54 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
+
+
+        if (!checkPermissions()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions()
+            }
+        } else {
+
+        }
+
+
         navView.itemIconTintList = null;
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.activity_main_drawer, menu)
         return true
     }
+
+    private fun checkPermissions() = ContextCompat.checkSelfPermission(this, CALL_PHONE) == PERMISSION_GRANTED
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun requestPermissions() {
+        requestPermissions(
+            arrayOf(CALL_PHONE),
+            REQUEST_PERMISSIONS_REQUEST_CODE
+        )
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_PERMISSIONS_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PermissionChecker.PERMISSION_GRANTED)) {
+
+                } else {
+                    Toast.makeText(this, "Oops! Permission Denied!!", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+        }
+    }
+
 
 
     fun setDrawer() {
@@ -79,6 +131,16 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
             R.id.nav_past ->{
                 if(fragmetID!=3){
                     navController?.navigate(R.id.fragmentMainToPast)}
+            }
+
+            R.id.nav_search ->{
+                if(fragmetID!=4){
+                    navController?.navigate(R.id.fragment_search_order)}
+            }
+
+            R.id.nav_products ->{
+                if(fragmetID!=5){
+                    navController?.navigate(R.id.fragment_products)}
             }
 
         }

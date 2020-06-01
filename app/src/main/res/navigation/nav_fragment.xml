@@ -112,4 +112,47 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/fragment_search_order"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.SearchOrdersFragment"
+        android:label="Fragment SearchOrders"
+        tools:layout="@layout/fragment_search_orders">
+
+
+        <action
+            android:id="@+id/fragmentSearchToMap"
+            app:destination="@id/fragment_map"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_products"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.ProductsFragment"
+        android:label="Fragment Products"
+        tools:layout="@layout/fragment_products">
+
+        <action
+            android:id="@+id/fragmentProductToEdit"
+            app:destination="@id/fragment_edit_products"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_edit_products"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.ProductEditFragment"
+        android:label="Fragment Products"
+        tools:layout="@layout/fragment_product_edit">
+
+    </fragment>
+
 </navigation>

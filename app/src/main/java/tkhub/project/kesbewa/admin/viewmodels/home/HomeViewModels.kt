@@ -1,24 +1,21 @@
 package tkhub.project.kesbewa.admin.viewmodels.home
 
 import android.content.Context
-import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
-import androidx.navigation.Navigation
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.Dispatchers
 import tkhub.project.kesbewa.admin.KesbewaAdmin
-import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.OrderRespons
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
-import tkhub.project.kesbewa.admin.repo.homeRepo
+import tkhub.project.kesbewa.admin.repo.HomeRepo
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 
 class HomeViewModels(app: Context) : ViewModel() {
 
     var ctx = app
     var appPref = AppPrefs
-    var repo = homeRepo(ctx)
+    var repo = HomeRepo(ctx)
 
 
    var isHomeProgressBarVisible = ObservableField<Boolean>()

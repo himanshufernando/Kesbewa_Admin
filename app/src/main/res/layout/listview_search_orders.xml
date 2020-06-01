@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="newordersitem"
+            type="tkhub.project.kesbewa.admin.data.models.OrderRespons" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_dealer_to_visits"
+        style="@style/CardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:onClick="@{clickListener}"
+        app:cardBackgroundColor="@color/babypowder"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/babypowder"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="ORDER NO"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{newordersitem.order_code}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView3"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView3"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView3"
+                tools:text="O0HIM0-109" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_light"
+                android:text="Placed on"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView3"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/diavlo_light"
+                android:text="@{String.valueOf(newordersitem.order_date)}"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView4"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView4" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="ITEM"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView4"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView4" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_total_qty)}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView6"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView6"
+                tools:text="55" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="150dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="TOTAL"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView7"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView7" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_total_price)+` RS`}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView8"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView8"
+                tools:text="1500000" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="Pay with"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView6" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_payment_type)}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView10"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView10"
+                tools:text="55" />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ConstraintLayout_customer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/babypowder"
+                app:layout_constraintTop_toBottomOf="@+id/divider">
+
+
+                <ImageView
+                    android:id="@+id/imageview_customer_details"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{clickListener}"
+                    android:src="@drawable/ic_profile_users"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:text="CUSTOMER"
+                    android:textColor="@color/textcolor3"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="80dp"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatTextView12"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setCustomerName="@{newordersitem.user.user_name}"
+                    tools:text="12345678945612378945615454555455455444554544545" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:text="NUMBER"
+                    android:textColor="@color/textcolor3"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="100dp"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:text="@{newordersitem.user.user_phone}"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView14"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatTextView14"
+                    tools:text="+940716607483" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_customer" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ConstraintLayout_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/babypowder"
+                app:layout_constraintTop_toBottomOf="@+id/divider2">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:text="DEL.ADDRESS"
+                    android:textColor="@color/textcolor3"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/diavlo_medium"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView16"
+                    app:setDeliveryAddress="@{newordersitem.delivery_address}"
+                    tools:text="@string/tst" />
+
+
+                <ImageView
+                    android:id="@+id/imageview_address_details"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:onClick="@{clickListener}"
+                    android:src="@drawable/ic_location"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_address" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView166"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="STATUS : "
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ConstraintLayout_address"
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView133"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="80dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:setCustomerOrderStatus="@{newordersitem.order_status_code}"
+                android:layout_marginTop="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView166"
+                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                android:layout_marginLeft="5dp"
+                tools:text="" />
+
+
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView133" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_order_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4"
+                app:setCurrentItems="@{newordersitem.itemlist}"
+                tools:layout_height="100dp"
+                tools:listitem="@layout/listview_order_item"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

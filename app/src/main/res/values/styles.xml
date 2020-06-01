@@ -8,7 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
+    <style name="app_content_extra_normal_light">
+        <item name="android:textSize">10sp</item>
+    </style>
     <style name="Theme.Kesbewa.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
 </resources>

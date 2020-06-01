@@ -1,7 +1,12 @@
 package tkhub.project.kesbewa.admin.ui.fragment
 
+import android.Manifest.permission.CALL_PHONE
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +15,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -139,6 +145,7 @@ class RejectOrdersFragment : Fragment() {
     }
 
     fun orderUpdate(orderResponse : OrderRespons){
+
         viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
             root.layout_loading_reject_orders.visibility = View.GONE
             when (response) {
@@ -201,6 +208,20 @@ class RejectOrdersFragment : Fragment() {
         dialogCustomer.appCompatTextView6.text = orderRespons.user.user_email
         dialogCustomer.appCompatTextView8.text = orderRespons.user.user_nic
         dialogCustomer.appCompatTextView10.text = orderRespons.user.user_code
+
+        dialogCustomer.img_call.setOnClickListener {
+            if (checkSelfPermission(context as Activity, CALL_PHONE) == PERMISSION_GRANTED) {
+                val dial = "tel:${orderRespons.user.user_phone}"
+                startActivity(Intent(Intent.ACTION_CALL, Uri.parse(dial)))
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Permission Call Phone denied",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        }
 
         imageLoader = ImageLoader.Builder(requireContext())
             .placeholder(R.drawable.ic_profile_users)

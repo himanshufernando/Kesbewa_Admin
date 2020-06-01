@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +19,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.request.LoadRequest
@@ -25,99 +29,58 @@ import coil.size.Scale
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.dialog_customer_details.*
-import kotlinx.android.synthetic.main.fragment_confirmed_orders.view.*
-import androidx.lifecycle.observe
-import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
+import kotlinx.android.synthetic.main.fragment_new_orders.view.*
+import kotlinx.android.synthetic.main.fragment_search_orders.view.*
+
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.NetworkError
 import tkhub.project.kesbewa.admin.data.models.OrderRespons
+import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
+import tkhub.project.kesbewa.admin.databinding.FragmentSearchOrdersBinding
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import tkhub.project.kesbewa.admin.services.network.InternetConnection
-import tkhub.project.kesbewa.admin.ui.adapters.ConfirmedOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.CustomerPastOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.NewOrdersAdapter
-import tkhub.project.kesbewa.admin.viewmodels.home.HomeViewModels
+import tkhub.project.kesbewa.admin.ui.adapters.SearchOrdersAdapter
+import tkhub.project.kesbewa.admin.viewmodels.past.PastViewModels
 
 /**
  * A simple [Fragment] subclass.
  */
-class ConfirmedOrdersFragment : Fragment() {
+class SearchOrdersFragment : Fragment() {
 
-
-    private val viewmodel: HomeViewModels by viewModels { HomeViewModels.LiveDataVMFactory }
+    private val viewmodel: PastViewModels by viewModels { PastViewModels.LiveDataVMFactory }
+    lateinit var binding: FragmentSearchOrdersBinding
     lateinit var root: View
     var alertDialog: AlertDialog? = null
-    private val adapter = ConfirmedOrdersAdapter()
+    private val adapter = SearchOrdersAdapter()
     private val adapterCustomerPast = CustomerPastOrdersAdapter()
-
-    lateinit var imageLoader: ImageLoader
     lateinit var dialogCustomer: Dialog
-    lateinit var dialogReject: Dialog
-
+    lateinit var imageLoader: ImageLoader
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.fragment_confirmed_orders, container, false)
-        root.recyclerView_confirmed_orders.adapter = adapter
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_orders, container, false)
+        binding.serachOrders = viewmodel
+
+        AppPrefs.setIntKeyValuePrefs(context!!, AppPrefs.KEY_FRAGMENT_ID,4)
+
+        binding.root.recyclerView_orrders.adapter = adapter
+
 
         if(!InternetConnection.checkInternetConnection()){
             errorAlertDialog(AppPrefs.errorNoInternet())
         }
 
 
-        viewmodel.getConformedOrders()
 
-        adapter.setOnItemClickListener(object : ConfirmedOrdersAdapter.ClickListener {
-            override fun onClick(orderRespons: OrderRespons, aView: View) {
-                when (aView.id) {
-                    R.id.imageview_customer_details -> {
-                        if (::dialogCustomer.isInitialized) {
-                            if (dialogCustomer.isShowing) {
-                                dialogCustomer.dismiss()
-                            }
-                        }
-                        dialogCustomerDetails(orderRespons)
-                    }
-
-
-                    R.id.imageview_address_details -> {
-                        val bundle =
-                            bundleOf("deliveryAddress" to Gson().toJson(orderRespons.delivery_address))
-                        view?.findNavController()?.navigate(R.id.fragmentHomeToMap, bundle)
-                    }
-
-                    R.id.textview_packed -> {
-                        IonAlert(requireContext(), IonAlert.ERROR_TYPE)
-                            .setTitleText("Are you sure?")
-                            .setContentText("Are you sure, you want to Packed ?")
-                            .setConfirmText("Yes")
-                            .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
-                                sDialog.dismissWithAnimation()
-
-                            })
-                            .setCancelText("No")
-                            .setCancelClickListener(IonAlert.ClickListener { sDialog ->
-                                sDialog.dismissWithAnimation()
-
-                            })
-                            .show()
-                    }
-                }
-            }
-        })
-
-
-
-
-        viewmodel.confirmedOrdersResponse.observe(viewLifecycleOwner) { response ->
-            root.layout_loading_confirmed_orders.visibility = View.GONE
+        viewmodel.ordersByCode.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is KesbewaResult.Success -> {
-                    var list =response.data
-                    adapter.submitList(list.reversed())
+                    viewmodel.orderList.value = response.data
+                    viewmodel.filterList()
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
                     Toast.makeText(
@@ -133,37 +96,11 @@ class ConfirmedOrdersFragment : Fragment() {
         }
 
 
-        return root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getConformedOrders()
-    }
-
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
-    }
-
-    fun orderUpdate(orderResponse : OrderRespons){
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
-            root.layout_loading_confirmed_orders.visibility = View.GONE
+        viewmodel.filterdOrders.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is KesbewaResult.Success -> {
-                    viewmodel.getConformedOrders()
-                    Toast.makeText(
-                        activity,
-                        response.data.errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    viewmodel.getNewOrders()
-
+                    var list =response.data
+                    adapter.submitList(list.reversed())
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
                     Toast.makeText(
@@ -173,14 +110,63 @@ class ConfirmedOrdersFragment : Fragment() {
                     ).show()
                 }
                 is KesbewaResult.LogicError.LogError -> {
-                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
+                     errorAlertDialog(response.exception)
                 }
             }
         }
 
-        viewmodel.orderStatusUpdate(orderResponse,3,"")
-    }
+        adapter.setOnItemClickListener(object : SearchOrdersAdapter.ClickListener {
+            override fun onClick(orderRespons: OrderRespons, aView: View) {
+                when (aView.id) {
+                    R.id.imageview_customer_details -> {
+                        if (::dialogCustomer.isInitialized) {
+                            if (dialogCustomer.isShowing) {
+                                dialogCustomer.dismiss()
+                            }
+                        }
+                        dialogCustomerDetails(orderRespons)
+                    }
 
+                    R.id.imageview_address_details -> {
+                        val bundle = bundleOf("deliveryAddress" to  Gson().toJson(orderRespons.delivery_address))
+                        view?.findNavController()?.navigate(R.id.fragmentSearchToMap,bundle)
+                    }
+
+
+                }
+
+            }
+        })
+
+
+        viewmodel.pastOrders.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is KesbewaResult.Success -> {
+                    var list =response.data
+                    adapterCustomerPast.submitList(list.reversed())
+                }
+                is KesbewaResult.ExceptionError.ExError -> {
+                    Toast.makeText(
+                        activity,
+                        response.exception.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is KesbewaResult.LogicError.LogError -> {
+                    Toast.makeText(
+                        activity,
+                        response.exception.errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+
+
+
+        return binding.root
+    }
 
     private fun errorAlertDialog(networkError: NetworkError) {
         if (alertDialog != null) {
@@ -204,9 +190,19 @@ class ConfirmedOrdersFragment : Fragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+
+        super.onStop()
+    }
+
 
     private fun dialogCustomerDetails(orderRespons: OrderRespons) {
 
+
+        viewmodel.getUserPastOrders(orderRespons.user.user_id)
 
         dialogCustomer = Dialog(requireContext())
         dialogCustomer.requestWindowFeature(Window.FEATURE_NO_TITLE)

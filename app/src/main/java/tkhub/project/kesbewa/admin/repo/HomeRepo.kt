@@ -1,6 +1,8 @@
 package tkhub.project.kesbewa.admin.repo
 
 import android.content.Context
+import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
@@ -12,8 +14,9 @@ import tkhub.project.kesbewa.admin.data.models.OrderStatus
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
-class homeRepo(context: Context) {
+class HomeRepo(context: Context) {
 
     var mContext = context
 
@@ -259,6 +262,65 @@ class homeRepo(context: Context) {
             awaitClose { this.cancel() }
 
         }
+
+
+    suspend fun getOrdersBuyOrder(value: String): Flow<ArrayList<OrderRespons>?> = callbackFlow {
+        lateinit var query: Query
+        if ((value.substring(1, 2).isDigitsOnly()) && (value.substring(0, 1) == "O")) {
+            query = orderRef?.orderByChild("order_code")!!.startAt(value)
+        } else if (value.substring(0, 2).isDigitsOnly()) {
+            query = orderRef?.orderByChild("user/user_phone")!!.startAt(value)
+        } else if (!value.substring(0, 2).isDigitsOnly()) {
+            query = orderRef?.orderByChild("user/user_name")!!.startAt(value)
+        }
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var list = ArrayList<OrderRespons>()
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue(OrderRespons::class.java)
+                    list.add(post!!)
+                }
+                offer(list)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                offer(null)
+            }
+        })
+        awaitClose { this.cancel() }
+    }
+
+
+    suspend fun getOrderFilter(
+        list: ArrayList<OrderRespons>,
+        searchName: String
+    ): ArrayList<OrderRespons> {
+        var resultProductList = ArrayList<OrderRespons>()
+
+        for (pro in list!!) {
+            val pattern = Pattern.compile(searchName, Pattern.CASE_INSENSITIVE)
+            val matcher = pattern.matcher(pro.order_code.toString())
+            if (matcher.lookingAt()) {
+                resultProductList.add(pro)
+            }
+
+            val matcherMake = pattern.matcher(pro.user.user_phone)
+            if (matcherMake.lookingAt()) {
+                resultProductList.add(pro)
+            }
+
+            val matcherPrice = pattern.matcher(pro.user.user_name)
+            if (matcherPrice.lookingAt()) {
+                resultProductList.add(pro)
+            }
+
+        }
+        resultProductList.distinctBy { it.order_id }
+
+        return resultProductList
+
+    }
 
 
 }

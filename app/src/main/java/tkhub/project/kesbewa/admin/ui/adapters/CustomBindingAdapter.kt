@@ -1,10 +1,16 @@
 package tkhub.project.kesbewa.admin.ui.adapters
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.bumptech.glide.Glide
+import tkhub.project.kesbewa.admin.KesbewaAdmin
 import tkhub.project.kesbewa.admin.data.models.CartItem
 import tkhub.project.kesbewa.admin.data.models.Customer
 import tkhub.project.kesbewa.admin.data.models.DeliveryAddress
@@ -88,4 +94,15 @@ object CustomBindingAdapter {
         view.text = statusInWord
 
     }
+
+    @BindingAdapter("setProductCoverImage")
+    @JvmStatic
+    fun setProductCoverImage(view: ImageView, pro_cover_img: String) {
+        view.visibility= View.VISIBLE
+
+      Glide.with(KesbewaAdmin.applicationContext())
+           .load(pro_cover_img)
+          .into(view)
+    }
+
 }
