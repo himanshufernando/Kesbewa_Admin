@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "tkhub.project.kesbewa.admin"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -98,4 +98,10 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+
+    implementation 'com.github.nedimf:maildroid:v0.0.4-relase'
+
 }

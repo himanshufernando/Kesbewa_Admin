@@ -4,7 +4,7 @@ package tkhub.project.kesbewa.admin.data.models
 data class CartItem (
     var cart_id: Long?,
     var pro_id: Long?,
-    var pro_name: String?,
+    var pro_name: String,
     var pro_price: Double?,
     var pro_size: String?,
     var pro_image: String?,

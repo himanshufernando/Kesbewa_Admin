@@ -2,6 +2,7 @@ package tkhub.project.kesbewa.admin.ui.activity
 
 import android.Manifest
 import android.Manifest.permission.CALL_PHONE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -72,11 +73,12 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
 
     private fun checkPermissions() = ContextCompat.checkSelfPermission(this, CALL_PHONE) == PERMISSION_GRANTED
 
+    private fun checkPermissionsStorage() = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestPermissions() {
         requestPermissions(
-            arrayOf(CALL_PHONE),
+            arrayOf(CALL_PHONE,WRITE_EXTERNAL_STORAGE),
             REQUEST_PERMISSIONS_REQUEST_CODE
         )
     }

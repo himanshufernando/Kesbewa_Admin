@@ -23,8 +23,8 @@
 
     <color name="colorRed">#e74c3c</color>
 
-
-
+    <color name="colorRedTrans">#26e74c3c</color>
+    <color name="textcolorBlack">#ff000000</color>
 
 
     <color name="background_color_1">#ebebeb</color>

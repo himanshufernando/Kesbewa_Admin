@@ -32,7 +32,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getNewOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("1")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("0")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -56,7 +56,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getConfirmedOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("2")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("1")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -80,7 +80,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getPackedOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("3")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("2")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -104,7 +104,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getDeliveryOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("4")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("3")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -127,7 +127,7 @@ class HomeRepo(context: Context) {
     }
 
     suspend fun getDeliveredOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("5")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("4")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -151,7 +151,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getComplteOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("6")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("5")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -175,7 +175,7 @@ class HomeRepo(context: Context) {
 
 
     suspend fun getRejectOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
-        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("0")
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("6")
 
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

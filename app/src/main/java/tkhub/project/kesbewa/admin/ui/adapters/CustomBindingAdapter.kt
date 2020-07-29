@@ -84,12 +84,13 @@ object CustomBindingAdapter {
     fun setCustomerOrderStatus(view: AppCompatTextView,status: Int) {
          var statusInWord=""
         when(status){
-             1 -> statusInWord = "New Order"
-             2 -> statusInWord = "Confirmed"
-             3-> statusInWord = "Packed"
-             4-> statusInWord = "In Transit"
-             5-> statusInWord = "Delivered"
-             6-> statusInWord = "Completed"
+             0 -> statusInWord = "New Order"
+             1 -> statusInWord = "Confirmed"
+             2-> statusInWord = "Packed"
+             3-> statusInWord = "In Transit"
+             4-> statusInWord = "Delivered"
+             5-> statusInWord = "Completed"
+            6-> statusInWord = "Reject"
          }
         view.text = statusInWord
 
