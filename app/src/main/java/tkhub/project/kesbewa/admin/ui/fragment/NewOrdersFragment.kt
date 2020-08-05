@@ -203,7 +203,7 @@ class NewOrdersFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                  if(orderResponse.itemlist.size < 15){
+                  if(orderResponse.itemlist.size < 20){
                       generatePDFOnlyOnePage(orderResponse)
                   }else{
                       generatePDFMoreThanOnePage(orderResponse)
@@ -452,7 +452,7 @@ class NewOrdersFragment : Fragment() {
         dynimcY += 80
 
 
-        for (i in 1..15){
+        for (i in 0..26){
             val item=itemlist[i]
             canvas.drawText(item.pro_name.toString(), 50.0f,dynimcY, paint);
 
@@ -490,10 +490,10 @@ class NewOrdersFragment : Fragment() {
 
         paint.textSize = 15.0f
 
-        canvas.drawText("Page No : 1", 720f, 1180f, paint)
+        canvas.drawText("Page No : 1", 700f, 1180f, paint)
         paint.textSize = 18.0f
 
-        pdfFooterCreator(canvas,paint,orderRespons)
+       // pdfFooterCreator(canvas,paint,orderRespons)
         document.finishPage(page)
 
         var pageInfoNew = PageInfo.Builder(800, 1200, 2).create()
@@ -515,7 +515,6 @@ class NewOrdersFragment : Fragment() {
         paint.textSize = 20.0f
         canvas.drawText("Invoice No", 50.0f, 100.0f, paint)
         canvas.drawText(": "+orderRespons.order_code, 180.0f, 100.0f, paint)
-        var index = 16
 
         dynimcY = 130f
 
@@ -523,180 +522,50 @@ class NewOrdersFragment : Fragment() {
         paint.color = resources.getColor(R.color.textcolor0)
         paint.textSize = 20.0f
 
-
-        var listSize = itemlist.size
-
         dynimcY = 200f
 
-
-        for(items in itemlist){
-            
-
-            var  proname = items.pro_name
-            canvas.drawText(proname, 50.0f,dynimcY, paint)
-            dynimcY = dynimcY+25f
-        }
-
-    /*    for (item in 16..listSize) {
-
-             proname = itemlist[item].pro_name
-
-            canvas.drawText("Himanshu", 50.0f,dynimcY, paint)
-
-         //   canvas.drawText("asasas ", 50.0f,dynimcY, paint);
-         //   println("rrrrrrrrrrrrrrrrrrrrrrrr rest :"+ itemlist[item].pro_name)
-         //   dynimcY += 25f
-
-            dynimcY = dynimcY+25f
-        }*/
-
-      //  for (i in index..itemlist.size) {
-       //    val item=itemlist[i]
-
-          //  println("rrrrrrrrrrrrrrrrrrrrrrrr rest :"+item.pro_name.toString())
-           // canvas.drawText(item.pro_name.toString(), 50.0f,dynimcY, paint);
-
-
-
-        //    dynimcY += 25f
-     //   }
-
-    /*    for (i in index..itemlist.size) {
-
-            println("rrrrrrrrrrrrrrrrrrrrrrrr itemlist.size :"+itemlist.size)
-
-            val item=itemlist[i]
-
-            println("rrrrrrrrrrrrrrrrrrrrrrrritem :"+item.pro_name)
-            canvas.drawText(item.pro_name.toString(), 50.0f,200f, paint);
-
-            var price = ""
-            var priceTagSize = 8-(item.pro_price.toString()).length
-
-            for (i in 1..priceTagSize){
-                price = "  $price"
-            }
-            price += item.pro_price.toString()
-            canvas.drawText(price, 420.0f,dynimcY, paint)
-
-
-            var qty = ""
-            var qtyTagSize = 5-(item.pro_total_qty.toString()).length
-
-            for (i in 1..qtyTagSize){
-                qty = "  $qty"
-            }
-            qty += item.pro_total_qty.toString()
-            canvas.drawText(qty, 520.0f,dynimcY, paint)
-
-
-            var subtot = ""
-            var subtotTagSize = 8-(item.pro_total_price.toString()).length
-
-            for (i in 1..subtotTagSize){
-                subtot = "  $subtot"
-            }
-            subtot += item.pro_total_price.toString()
-            canvas.drawText(subtot, 690.0f,dynimcY, paint);
-
-            dynimcY += 25f
-        }*/
-
-
-/*
-        for (i in index..itemlist.size) {
-            println("sssssssssssssssssss  8")
-
-            val remaining = count % 45
-            if (remaining == 0) {
-                pdfFooterCreator(canvas,paint,orderRespons)
-                document.finishPage(page)
-                pageCount++
-
-                pageInfoNew = PageInfo.Builder(800, 1200, pageCount).create()
-                page = document.startPage(pageInfoNew)
-                canvas = page.canvas
-
-                val item=itemlist[i]
-                canvas.drawText(item.pro_name.toString(), 50.0f,dynimcY, paint);
+        for ((index, value) in itemlist.withIndex()) {
+            if( index > 26){
+                if(value.pro_name.length>25){
+                    canvas.drawText(value.pro_name.substring(0,25)+"...", 50.0f,dynimcY, paint);
+                }else{
+                    canvas.drawText(value.pro_name, 50.0f,dynimcY, paint);
+                }
 
                 var price = ""
-                var priceTagSize = 8-(item.pro_price.toString()).length
+                var priceTagSize = 8-(value.pro_price.toString()).length
 
                 for (i in 1..priceTagSize){
                     price = "  $price"
                 }
-                price += item.pro_price.toString()
-                canvas.drawText(price, 420.0f,dynimcY, paint)
-
+                price += value.pro_price.toString()
+                canvas.drawText(price, 400.0f,dynimcY, paint)
 
                 var qty = ""
-                var qtyTagSize = 5-(item.pro_total_qty.toString()).length
+                var qtyTagSize = 5-(value.pro_total_qty.toString()).length
 
                 for (i in 1..qtyTagSize){
                     qty = "  $qty"
                 }
-                qty += item.pro_total_qty.toString()
-                canvas.drawText(qty, 520.0f,dynimcY, paint)
+                qty += value.pro_total_qty.toString()
+                canvas.drawText(qty, 510.0f,dynimcY, paint)
 
 
                 var subtot = ""
-                var subtotTagSize = 8-(item.pro_total_price.toString()).length
+                var subtotTagSize = 8-(value.pro_total_price.toString()).length
 
                 for (i in 1..subtotTagSize){
                     subtot = "  $subtot"
                 }
-                subtot += item.pro_total_price.toString()
-                canvas.drawText(subtot, 690.0f,dynimcY, paint);
-
-                dynimcY += 25f
+                subtot += value.pro_total_price.toString()
+                canvas.drawText(subtot, 670.0f,dynimcY, paint);
 
 
-            }else{
-                println("sssssssssssssssssss  9")
-                val item=itemlist[i]
-                canvas.drawText(item.pro_name.toString(), 50.0f,dynimcY, paint);
-
-                var price = ""
-                var priceTagSize = 8-(item.pro_price.toString()).length
-
-                for (i in 1..priceTagSize){
-                    price = "  $price"
-                }
-                price += item.pro_price.toString()
-                canvas.drawText(price, 420.0f,dynimcY, paint)
-
-
-                var qty = ""
-                var qtyTagSize = 5-(item.pro_total_qty.toString()).length
-
-                for (i in 1..qtyTagSize){
-                    qty = "  $qty"
-                }
-                qty += item.pro_total_qty.toString()
-                canvas.drawText(qty, 520.0f,dynimcY, paint)
-
-
-                var subtot = ""
-                var subtotTagSize = 8-(item.pro_total_price.toString()).length
-
-                for (i in 1..subtotTagSize){
-                    subtot = "  $subtot"
-                }
-                subtot += item.pro_total_price.toString()
-                canvas.drawText(subtot, 690.0f,dynimcY, paint);
-
-                dynimcY += 25f
-
-
-
-
+                dynimcY = dynimcY+25f
             }
-
-            count++
         }
-*/
 
+        pdfFooterCreator(canvas,paint,orderRespons)
 
         document.finishPage(page)
         saveCreatedPDF(document,orderRespons)

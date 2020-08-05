@@ -132,6 +132,7 @@ class PastViewModels(app: Context) : ViewModel() {
 
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         if(s.length > 3){
+            isOrdersLoaderVisible.set(true)
             searchQuery.value = s.toString()
             _searchOrdersByCode.value = s.toString()
         }
@@ -142,14 +143,17 @@ class PastViewModels(app: Context) : ViewModel() {
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             var currentRes = repo.getOrdersBuyOrder(id)
             try {
+                isOrdersLoaderVisible.set(false)
                 currentRes.collect { value ->
                     if (value == null) {
                         emit(KesbewaResult.LogicError.LogError(AppPrefs.errorSomethingWentWrong()))
                     } else {
                         emit(KesbewaResult.Success(value))
+
                     }
                 }
             } catch (ioException: Exception) {
+                isOrdersLoaderVisible.set(false)
                 emit(KesbewaResult.ExceptionError.ExError(ioException))
             }
         }

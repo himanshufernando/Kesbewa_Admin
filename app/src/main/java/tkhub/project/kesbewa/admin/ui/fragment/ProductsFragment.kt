@@ -14,12 +14,14 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_delivery_orders.view.*
 import kotlinx.android.synthetic.main.fragment_new_orders.view.*
 import kotlinx.android.synthetic.main.fragment_products.view.*
+import kotlinx.android.synthetic.main.fragment_search_orders.view.*
 
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.OrderRespons
 import tkhub.project.kesbewa.admin.data.models.Products
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
+import tkhub.project.kesbewa.admin.ui.activity.MainActivity
 import tkhub.project.kesbewa.admin.ui.adapters.DeliveryOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.NewOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.ProductsAdapter
@@ -42,10 +44,15 @@ class ProductsFragment : Fragment() {
 
         root.recyclerView_products.adapter = adapter
 
+
+        root.imageview_navigation_product.setOnClickListener {
+            (activity as MainActivity).openDrawer()
+        }
+
         adapter.setOnItemClickListener(object : ProductsAdapter.ClickListener {
             override fun onClick(product: Products, aView: View) {
-                val bundle = bundleOf("Product" to product)
-                NavHostFragment.findNavController(this@ProductsFragment).navigate(R.id.fragmentProductToEdit,bundle)
+              //  val bundle = bundleOf("Product" to product)
+              //  NavHostFragment.findNavController(this@ProductsFragment).navigate(R.id.fragmentProductToEdit,bundle)
 
             }
         })
@@ -55,7 +62,6 @@ class ProductsFragment : Fragment() {
             when (response) {
                 is KesbewaResult.Success -> {
                    var list =response.data
-                    println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa dcd: "+list)
                     adapter.submitList(list.reversed())
                 }
                 is KesbewaResult.ExceptionError.ExError -> {

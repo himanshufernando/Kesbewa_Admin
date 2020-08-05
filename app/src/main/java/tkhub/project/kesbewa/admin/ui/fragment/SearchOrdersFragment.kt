@@ -29,6 +29,7 @@ import coil.size.Scale
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.dialog_customer_details.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_new_orders.view.*
 import kotlinx.android.synthetic.main.fragment_search_orders.view.*
 
@@ -39,6 +40,7 @@ import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.databinding.FragmentSearchOrdersBinding
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import tkhub.project.kesbewa.admin.services.network.InternetConnection
+import tkhub.project.kesbewa.admin.ui.activity.MainActivity
 import tkhub.project.kesbewa.admin.ui.adapters.CustomerPastOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.NewOrdersAdapter
 import tkhub.project.kesbewa.admin.ui.adapters.SearchOrdersAdapter
@@ -74,7 +76,9 @@ class SearchOrdersFragment : Fragment() {
             errorAlertDialog(AppPrefs.errorNoInternet())
         }
 
-
+        binding.root.imageview_navigation_search.setOnClickListener {
+            (activity as MainActivity).openDrawer()
+        }
 
         viewmodel.ordersByCode.observe(viewLifecycleOwner) { response ->
             when (response) {
