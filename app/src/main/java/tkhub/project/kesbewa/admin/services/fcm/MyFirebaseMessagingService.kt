@@ -42,7 +42,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         remoteMessage.notification?.let {
 
         }
-
+        sendNotification(remoteMessage.notification?.body.toString())
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
@@ -55,6 +55,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * is initially generated so this is where you would retrieve the token.
      */
     override fun onNewToken(token: String) {
+        println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa token    :   "+token)
         AppPrefs.setStringKeyValuePrefs(this, AppPrefs.KEY_PUSH_TOKEN,token)
     }
     // [END on_new_token]

@@ -26,7 +26,7 @@ import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.dialog_customer_details.*
 import kotlinx.android.synthetic.main.fragment_confirmed_orders.view.*
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.NetworkError
@@ -62,12 +62,7 @@ class ConfirmedOrdersFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_confirmed_orders, container, false)
         root.recyclerView_confirmed_orders.adapter = adapter
 
-        if(!InternetConnection.checkInternetConnection()){
-            errorAlertDialog(AppPrefs.errorNoInternet())
-        }
 
-
-        viewmodel.getConformedOrders()
 
         adapter.setOnItemClickListener(object : ConfirmedOrdersAdapter.ClickListener {
             override fun onClick(orderRespons: OrderRespons, aView: View) {
@@ -94,7 +89,15 @@ class ConfirmedOrdersFragment : Fragment() {
                             .setContentText("Are you sure, you want to Packed ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
+                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                                    orderUpdateObserver()
+                                }
+                                if(orderRespons.order_dispatch_type=="STORE"){
+                                    viewmodel.orderStatusUpdate(orderRespons,7,"")
+                                }else{
+                                    viewmodel.orderStatusUpdate(orderRespons,2,"")
+                                }
+
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -109,11 +112,50 @@ class ConfirmedOrdersFragment : Fragment() {
             }
         })
 
+        root.swiperefresh_confirmed_orders.setOnRefreshListener {
+            if (!viewmodel.confirmedOrdersResponse.hasObservers()) {
+                confirmedOrdersResponseObserver()
+            }
+            viewmodel.getConformedOrders()
+        }
 
 
+        return root
+    }
 
-        viewmodel.confirmedOrdersResponse.observe(viewLifecycleOwner) { response ->
+    override fun onResume() {
+        super.onResume()
+        if(!InternetConnection.checkInternetConnection()){
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+
+        if (!viewmodel.confirmedOrdersResponse.hasObservers()) {
+            confirmedOrdersResponseObserver()
+        }
+        viewmodel.getConformedOrders()
+    }
+
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.confirmedOrdersResponse.removeObservers(viewLifecycleOwner)
+
+        super.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.confirmedOrdersResponse.removeObservers(viewLifecycleOwner)
+    }
+
+    fun confirmedOrdersResponseObserver (){
+
+        viewmodel.confirmedOrdersResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_confirmed_orders.visibility = View.GONE
+            root.swiperefresh_confirmed_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
                     var list =response.data
@@ -130,31 +172,21 @@ class ConfirmedOrdersFragment : Fragment() {
                     errorAlertDialog(response.exception)
                 }
             }
-        }
+        })
 
 
-        return root
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getConformedOrders()
-    }
+    fun orderUpdateObserver(){
 
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
-    }
-
-    fun orderUpdate(orderResponse : OrderRespons){
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_confirmed_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
+
+                    if (!viewmodel.confirmedOrdersResponse.hasObservers()) {
+                        confirmedOrdersResponseObserver()
+                    }
                     viewmodel.getConformedOrders()
                     Toast.makeText(
                         activity,
@@ -176,10 +208,10 @@ class ConfirmedOrdersFragment : Fragment() {
                     Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        })
 
-        viewmodel.orderStatusUpdate(orderResponse,3,"")
     }
+
 
 
     private fun errorAlertDialog(networkError: NetworkError) {

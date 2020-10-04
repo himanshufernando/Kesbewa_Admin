@@ -55,6 +55,10 @@ class HomeViewModels(app: Context) : ViewModel() {
     private val _rejectOrders = MutableLiveData<Int>()
     val  rejectOrders: LiveData<Int> = _rejectOrders
 
+
+    private val _storeOrders = MutableLiveData<Int>()
+    val storeOrders: LiveData<Int> = _storeOrders
+
     init {
         isHomeProgressBarVisible.set(false)
     }
@@ -197,6 +201,33 @@ class HomeViewModels(app: Context) : ViewModel() {
             }
         }
     }
+
+
+
+    fun getStoreOrders(){
+        _storeOrders.value = (1..1000).random()
+    }
+
+    val storeOrdersResponse = storeOrders.switchMap { id ->
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            var currentRes = repo.getStoreOrders()
+            try {
+                currentRes.collect { value ->
+                    if (value == null) {
+                        println("qqqqqqqqqqqqqqqqqqqqqqqqqqq222")
+                        emit(KesbewaResult.LogicError.LogError(AppPrefs.errorSomethingWentWrong()))
+                    } else {
+                        println("qqqqqqqqqqqqqqqqqqqqqqqqqqq3333 "+value)
+                        emit(KesbewaResult.Success(value))
+                    }
+                }
+            } catch (ioException: Exception) {
+                println("qqqqqqqqqqqqqqqqqqqqqqqqqqq44444 ioException "+ioException)
+                emit(KesbewaResult.ExceptionError.ExError(ioException))
+            }
+        }
+    }
+
 
 
     //update

@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
             PACKED_ORDERS_PAGE_INDEX -> getString(R.string.viewpager_packed_orders)
             DELIVERY_ORDERS_PAGE_INDEX -> getString(R.string.viewpager_delivery_orders)
             DELIVERED_ORDERS_PAGE_INDEX -> getString(R.string.viewpager_delivered_orders)
+            STORE_ORDERS_PAGE_INDEX -> getString(R.string.viewpager_store_orders)
             else -> null
         }
     }

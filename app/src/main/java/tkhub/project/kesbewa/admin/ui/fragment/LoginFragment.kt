@@ -13,6 +13,9 @@ import androidx.lifecycle.observe
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 import tkhub.project.kesbewa.admin.R
@@ -48,20 +51,6 @@ class LoginFragment : Fragment() {
         AppPrefs.setIntKeyValuePrefs(context!!, AppPrefs.KEY_FRAGMENT_ID, 1)
 
 
-        viewmodel.loginServiceResponse.observe(viewLifecycleOwner) { respons ->
-            when(respons){
-                is KesbewaResult.Success ->{
-                    Toast.makeText(context, respons.data.errorMessage, Toast.LENGTH_SHORT).show()
-                }
-                is KesbewaResult.ExceptionError.ExError -> {
-                    Toast.makeText(context, respons.exception.message, Toast.LENGTH_SHORT).show()
-                }
-                is KesbewaResult.LogicError.LogError -> {
-                    Toast.makeText(context, respons.exception.errorMessage, Toast.LENGTH_SHORT).show()
-                    setErrorUI(respons.exception)
-                }
-            }
-        }
 
         binding.root.ll_password_show_hide.setOnClickListener {
             if (isPasswordShow) {
@@ -79,10 +68,49 @@ class LoginFragment : Fragment() {
 
         (activity as MainActivity).removeDrawer()
 
+
+
+        binding.root.constraintLayout7.setOnClickListener {
+
+            if (!viewmodel.loginServiceResponse.hasObservers()) {
+                loginServiceResponseObserver()
+            }
+            viewmodel.login()
+
+
+        }
+
+
         return binding.root
 
 
     }
+
+    private fun loginServiceResponseObserver() {
+        viewmodel.loginServiceResponse.observe(viewLifecycleOwner, Observer {respons ->
+            try {
+                when(respons){
+                    is KesbewaResult.Success ->{
+                        NavHostFragment.findNavController(this).navigate(R.id.fragmentLoginToHome)
+                        Toast.makeText(context, respons.data.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+
+                    is KesbewaResult.ExceptionError.ExError -> {
+                        Toast.makeText(context, respons.exception.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is KesbewaResult.LogicError.LogError -> {
+                        Toast.makeText(context, respons.exception.errorMessage, Toast.LENGTH_SHORT).show()
+                        setErrorUI(respons.exception)
+                    }
+                }
+
+            } catch (ex: Exception) {
+
+            }
+
+        })
+    }
+
 
     private fun setErrorUI(respond: NetworkError) {
         when (respond.errorCode) {

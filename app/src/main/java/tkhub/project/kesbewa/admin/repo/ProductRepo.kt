@@ -8,10 +8,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import tkhub.project.kesbewa.admin.data.models.NetworkError
-import tkhub.project.kesbewa.admin.data.models.OrderRespons
-import tkhub.project.kesbewa.admin.data.models.OrderStatus
-import tkhub.project.kesbewa.admin.data.models.Products
+import tkhub.project.kesbewa.admin.data.models.*
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,8 +21,7 @@ class ProductRepo(context: Context) {
 
     var database: FirebaseDatabase? = FirebaseDatabase.getInstance()
     var productsRef: DatabaseReference? = database?.getReference("Products")
-
-
+    var productsImage: DatabaseReference? = database?.getReference("ProductImages")
 
 
     suspend fun getProduct(): Flow<ArrayList<Products>?> = callbackFlow {
@@ -47,6 +43,38 @@ class ProductRepo(context: Context) {
 
         awaitClose { this.cancel() }
 
+    }
+
+
+    suspend fun addProductImage(pro: ProductImage): Flow<NetworkError> = callbackFlow {
+
+        var errorAddress = NetworkError()
+        when {
+            AppPrefs.checkValidString(pro.img_url!!) -> {
+                errorAddress.errorMessage = "Enter URLr!"
+                errorAddress.errorCode = "Empty URL"
+                offer(errorAddress)
+
+            }
+            else -> {
+
+                var unxId = AppPrefs.genarateUniqCode()
+                var id = pro.pro_code+"_"+unxId.toString()
+                pro.img_id = unxId
+
+                productsImage?.child(id)?.setValue(pro)
+
+                errorAddress.errorMessage = "New Address url successfully"
+                errorAddress.errorCode = "New URL"
+                offer(errorAddress)
+            }
+
+
+        }
+
+
+
+        awaitClose { this.cancel() }
     }
 
 

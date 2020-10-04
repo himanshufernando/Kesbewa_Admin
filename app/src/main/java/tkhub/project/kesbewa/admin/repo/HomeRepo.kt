@@ -87,7 +87,10 @@ class HomeRepo(context: Context) {
                 var list = ArrayList<OrderRespons>()
                 for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue(OrderRespons::class.java)
-                    list.add(post!!)
+                    if(post?.order_dispatch_type == "DELIVERY"){
+                        list.add(post!!)
+                    }
+
                 }
                 offer(list)
 
@@ -103,6 +106,28 @@ class HomeRepo(context: Context) {
     }
 
 
+    suspend fun getStoreOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
+        val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("7")
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var list = ArrayList<OrderRespons>()
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue(OrderRespons::class.java)
+                    list.add(post!!)
+                }
+                offer(list)
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                offer(null)
+            }
+        })
+        awaitClose { this.cancel() }
+
+    }
+
+
     suspend fun getDeliveryOrders(): Flow<ArrayList<OrderRespons>?> = callbackFlow {
         val query: Query = orderRef?.orderByChild("order_status")!!.equalTo("3")
 
@@ -111,6 +136,7 @@ class HomeRepo(context: Context) {
                 var list = ArrayList<OrderRespons>()
                 for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue(OrderRespons::class.java)
+
                     list.add(post!!)
                 }
                 offer(list)

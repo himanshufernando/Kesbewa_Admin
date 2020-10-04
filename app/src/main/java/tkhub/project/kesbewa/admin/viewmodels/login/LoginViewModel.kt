@@ -41,9 +41,8 @@ class LoginViewModel(app: Context) : ViewModel() {
 
 
 
-    fun login(view: View) {
+    fun login() {
         isLoginVisible.set(true)
-        layoutView = view
         var user = User("",0,"",
             editTextLoginPhone.value.toString(),"",
             editTextLoginPassword.value.toString()
@@ -60,7 +59,6 @@ class LoginViewModel(app: Context) : ViewModel() {
                 loginRes.collect { value ->
                     if (value.errorCode == appPref.SUCCESS_LOGGING) {
                         emit(KesbewaResult.Success(value))
-                       Navigation.findNavController(layoutView).navigate(R.id.fragmentLoginToHome)
                     } else {
                         emit(KesbewaResult.LogicError.LogError(value))
                     }

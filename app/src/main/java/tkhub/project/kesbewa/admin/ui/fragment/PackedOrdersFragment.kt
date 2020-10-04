@@ -23,7 +23,7 @@ import coil.ImageLoader
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.fragment_packed_orders.view.*
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import coil.request.LoadRequest
 import coil.size.Scale
 import kotlinx.android.synthetic.main.dialog_customer_details.*
@@ -63,12 +63,6 @@ class PackedOrdersFragment : Fragment() {
 
         root.recyclerView_packed_orders.adapter = adapter
 
-        if(!InternetConnection.checkInternetConnection()){
-            errorAlertDialog(AppPrefs.errorNoInternet())
-        }
-
-        viewmodel.getPackedOrders()
-
         adapter.setOnItemClickListener(object : PackedOrdersAdapter.ClickListener {
             override fun onClick(orderRespons: OrderRespons, aView: View) {
                 when (aView.id) {
@@ -94,7 +88,12 @@ class PackedOrdersFragment : Fragment() {
                             .setContentText("Are you sure, you want to pass to delivery ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
+
+                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                                    orderUpdateObserver()
+                                }
+                                viewmodel.orderStatusUpdate(orderRespons,3,"")
+
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -109,9 +108,50 @@ class PackedOrdersFragment : Fragment() {
             }
         })
 
+        root.swiperefresh_packed_orders.setOnRefreshListener {
+            if (!viewmodel.packedOrdersResponse.hasObservers()) {
+                packedOrdersResponseObserver()
+            }
 
-        viewmodel.packedOrdersResponse.observe(viewLifecycleOwner) { response ->
+            viewmodel.getPackedOrders()
+        }
+
+
+        return root
+    }
+    override fun onStop() {
+        super.onStop()
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.packedOrdersResponse.removeObservers(viewLifecycleOwner)
+
+    }
+    override fun onResume() {
+        super.onResume()
+
+        if(!InternetConnection.checkInternetConnection()){
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+        if (!viewmodel.packedOrdersResponse.hasObservers()) {
+            packedOrdersResponseObserver()
+        }
+
+        viewmodel.getPackedOrders()
+    }
+    override fun onPause() {
+        super.onPause()
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.packedOrdersResponse.removeObservers(viewLifecycleOwner)
+
+    }
+
+    fun packedOrdersResponseObserver(){
+
+        viewmodel.packedOrdersResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_packed_orders.visibility = View.GONE
+            root.swiperefresh_packed_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
                     var list =response.data
@@ -128,27 +168,14 @@ class PackedOrdersFragment : Fragment() {
                     errorAlertDialog(response.exception)
                 }
             }
-        }
+        })
 
-
-
-
-
-        return root
     }
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
-    }
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getPackedOrders()
-    }
-    fun orderUpdate(orderResponse : OrderRespons){
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
+
+
+    fun orderUpdateObserver(){
+
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_packed_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
@@ -173,9 +200,9 @@ class PackedOrdersFragment : Fragment() {
                     Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        })
 
-        viewmodel.orderStatusUpdate(orderResponse,4,"")
+
     }
 
 

@@ -21,7 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.request.LoadRequest
@@ -72,52 +72,13 @@ class SearchOrdersFragment : Fragment() {
         binding.root.recyclerView_orrders.adapter = adapter
 
 
-        if(!InternetConnection.checkInternetConnection()){
-            errorAlertDialog(AppPrefs.errorNoInternet())
-        }
+
 
         binding.root.imageview_navigation_search.setOnClickListener {
             (activity as MainActivity).openDrawer()
         }
 
-        viewmodel.ordersByCode.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is KesbewaResult.Success -> {
-                    viewmodel.orderList.value = response.data
-                    viewmodel.filterList()
-                }
-                is KesbewaResult.ExceptionError.ExError -> {
-                    Toast.makeText(
-                        activity,
-                        response.exception.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                is KesbewaResult.LogicError.LogError -> {
-                    errorAlertDialog(response.exception)
-                }
-            }
-        }
 
-
-        viewmodel.filterdOrders.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is KesbewaResult.Success -> {
-                    var list =response.data
-                    adapter.submitList(list.reversed())
-                }
-                is KesbewaResult.ExceptionError.ExError -> {
-                    Toast.makeText(
-                        activity,
-                        response.exception.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                is KesbewaResult.LogicError.LogError -> {
-                     errorAlertDialog(response.exception)
-                }
-            }
-        }
 
         adapter.setOnItemClickListener(object : SearchOrdersAdapter.ClickListener {
             override fun onClick(orderRespons: OrderRespons, aView: View) {
@@ -143,7 +104,108 @@ class SearchOrdersFragment : Fragment() {
         })
 
 
-        viewmodel.pastOrders.observe(viewLifecycleOwner) { response ->
+
+
+
+
+        return binding.root
+    }
+
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+
+        viewmodel.filterdOrders.removeObservers(viewLifecycleOwner)
+        viewmodel.ordersByCode.removeObservers(viewLifecycleOwner)
+        viewmodel.pastOrders.removeObservers(viewLifecycleOwner)
+
+        super.onStop()
+    }
+    override fun onResume() {
+        super.onResume()
+
+        if(!InternetConnection.checkInternetConnection()){
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+        if (!viewmodel.ordersByCode.hasObservers()) {
+            ordersByCodeObserver()
+        }
+
+    }
+    override fun onPause() {
+        super.onPause()
+        viewmodel.filterdOrders.removeObservers(viewLifecycleOwner)
+        viewmodel.ordersByCode.removeObservers(viewLifecycleOwner)
+        viewmodel.pastOrders.removeObservers(viewLifecycleOwner)
+
+    }
+
+
+
+    fun filterdOrdersObserver(){
+
+
+        viewmodel.filterdOrders.observe(viewLifecycleOwner, Observer {response ->
+            when (response) {
+                is KesbewaResult.Success -> {
+                    var list =response.data
+                    adapter.submitList(list.reversed())
+                }
+                is KesbewaResult.ExceptionError.ExError -> {
+                    Toast.makeText(
+                        activity,
+                        response.exception.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is KesbewaResult.LogicError.LogError -> {
+                    errorAlertDialog(response.exception)
+                }
+            }
+        })
+
+    }
+
+
+
+
+    fun ordersByCodeObserver(){
+
+        viewmodel.ordersByCode.observe(viewLifecycleOwner, Observer {response ->
+            when (response) {
+                is KesbewaResult.Success -> {
+                    viewmodel.orderList.value = response.data
+
+                    if (!viewmodel.filterdOrders.hasObservers()) {
+                        filterdOrdersObserver()
+                    }
+
+                    viewmodel.filterList()
+                }
+                is KesbewaResult.ExceptionError.ExError -> {
+                    Toast.makeText(
+                        activity,
+                        response.exception.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is KesbewaResult.LogicError.LogError -> {
+                    errorAlertDialog(response.exception)
+                }
+            }
+        })
+
+    }
+
+
+
+
+
+    fun pastOrdersObserver(){
+
+
+        viewmodel.pastOrders.observe(viewLifecycleOwner, Observer {response ->
             when (response) {
                 is KesbewaResult.Success -> {
                     var list =response.data
@@ -164,13 +226,16 @@ class SearchOrdersFragment : Fragment() {
                     ).show()
                 }
             }
-        }
+        })
 
 
 
-
-        return binding.root
     }
+
+
+
+
+
 
     private fun errorAlertDialog(networkError: NetworkError) {
         if (alertDialog != null) {
@@ -194,19 +259,14 @@ class SearchOrdersFragment : Fragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-
-        super.onStop()
-    }
-
 
     private fun dialogCustomerDetails(orderRespons: OrderRespons) {
 
-
+        if (!viewmodel. pastOrders.hasObservers()) {
+            pastOrdersObserver()
+        }
         viewmodel.getUserPastOrders(orderRespons.user.user_id)
+
 
         dialogCustomer = Dialog(requireContext())
         dialogCustomer.requestWindowFeature(Window.FEATURE_NO_TITLE)

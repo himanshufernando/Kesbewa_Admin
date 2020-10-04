@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/textcolor4"
-    tools:context=".ui.fragment.ConfirmedOrdersFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.PackedOrdersFragment">
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swiperefresh_confirmed_orders"
+        android:id="@+id/swiperefresh_store_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_confirmed_orders"
+        android:id="@+id/recyclerView_store_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
@@ -23,15 +24,14 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/listview_new_orders"
+        tools:listitem="@layout/listview_store_orders"
         tools:visibility="visible" />
-
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_loading_confirmed_orders"
+        android:id="@+id/layout_loading_store_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#CC000000"

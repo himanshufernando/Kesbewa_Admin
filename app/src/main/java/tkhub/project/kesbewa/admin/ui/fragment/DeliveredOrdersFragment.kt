@@ -23,7 +23,7 @@ import coil.ImageLoader
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.fragment_delivered_orders.view.*
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import coil.request.LoadRequest
 import coil.size.Scale
 import kotlinx.android.synthetic.main.dialog_customer_details.*
@@ -59,7 +59,7 @@ class DeliveredOrdersFragment : Fragment() {
 
         root.recyclerView_delivered_orders.adapter = adapter
 
-        if(!InternetConnection.checkInternetConnection()){
+        if (!InternetConnection.checkInternetConnection()) {
             errorAlertDialog(AppPrefs.errorNoInternet())
         }
 
@@ -89,7 +89,10 @@ class DeliveredOrdersFragment : Fragment() {
                             .setContentText("Are you sure, you want to complete ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
+                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                                    orderUpdateObserver()
+                                }
+                                viewmodel.orderStatusUpdate(orderRespons, 5, "")
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -105,11 +108,55 @@ class DeliveredOrdersFragment : Fragment() {
         })
 
 
-        viewmodel.deliveredOrdersResponse.observe(viewLifecycleOwner) { response ->
+        root.swiperefresh_delivered_orders.setOnRefreshListener {
+            if (!viewmodel.deliveredOrdersResponse.hasObservers()) {
+                deliveredOrdersResponseObserver()
+            }
+
+            viewmodel.getDeliveredOrders()
+        }
+
+
+
+        return root
+    }
+
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.deliveredOrdersResponse.removeObservers(viewLifecycleOwner)
+        super.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!InternetConnection.checkInternetConnection()) {
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+
+        if (!viewmodel.deliveredOrdersResponse.hasObservers()) {
+            deliveredOrdersResponseObserver()
+        }
+
+        viewmodel.getDeliveredOrders()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.deliveredOrdersResponse.removeObservers(viewLifecycleOwner)
+
+    }
+
+    fun deliveredOrdersResponseObserver() {
+        viewmodel.deliveredOrdersResponse.observe(viewLifecycleOwner, Observer { response ->
             root.layout_loading_delivered_orders.visibility = View.GONE
+            root.swiperefresh_delivered_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
-                    var list =response.data
+                    var list = response.data
                     adapter.submitList(list.reversed())
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
@@ -123,27 +170,13 @@ class DeliveredOrdersFragment : Fragment() {
                     errorAlertDialog(response.exception)
                 }
             }
-        }
+        })
 
 
-
-        return root
-    }
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getDeliveredOrders()
-    }
-
-    fun orderUpdate(orderResponse : OrderRespons){
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
+    fun orderUpdateObserver() {
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer { response ->
             root.layout_loading_delivered_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
@@ -165,12 +198,12 @@ class DeliveredOrdersFragment : Fragment() {
                     ).show()
                 }
                 is KesbewaResult.LogicError.LogError -> {
-                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-        }
+        })
 
-        viewmodel.orderStatusUpdate(orderResponse,6,"")
     }
 
 

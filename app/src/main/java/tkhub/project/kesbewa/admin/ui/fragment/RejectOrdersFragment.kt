@@ -23,7 +23,7 @@ import coil.ImageLoader
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
 import kotlinx.android.synthetic.main.fragment_reject_orders.view.*
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import coil.request.LoadRequest
 import coil.size.Scale
 import kotlinx.android.synthetic.main.dialog_customer_details.*
@@ -59,9 +59,7 @@ class RejectOrdersFragment : Fragment() {
 
         root.recyclerView_reject_orders.adapter = adapter
 
-        if(!InternetConnection.checkInternetConnection()){
-            errorAlertDialog(AppPrefs.errorNoInternet())
-        }
+
 
         adapter.setOnItemClickListener(object : RejectOrdersAdapter.ClickListener {
             override fun onClick(orderRespons: OrderRespons, aView: View) {
@@ -87,7 +85,10 @@ class RejectOrdersFragment : Fragment() {
                             .setContentText("Are you sure you want to Process Again ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
+                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                                    orderUpdateObserver()
+                                }
+                                viewmodel.orderStatusUpdate(orderRespons,1,"")
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -104,8 +105,53 @@ class RejectOrdersFragment : Fragment() {
             }
         })
 
-        viewmodel.rejectOrdersResponse.observe(viewLifecycleOwner) { response ->
+        root.swiperefresh_reject_orders.setOnRefreshListener {
+            if (!viewmodel.rejectOrdersResponse.hasObservers()) {
+                rejectOrdersResponseObserver()
+            }
+
+            viewmodel.getRejectOrders()
+        }
+
+        return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(!InternetConnection.checkInternetConnection()){
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+
+        if (!viewmodel.rejectOrdersResponse.hasObservers()) {
+            rejectOrdersResponseObserver()
+        }
+
+        viewmodel.getRejectOrders()
+    }
+
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.rejectOrdersResponse.removeObservers(viewLifecycleOwner)
+        super.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.rejectOrdersResponse.removeObservers(viewLifecycleOwner)
+
+    }
+
+    fun rejectOrdersResponseObserver(){
+
+        viewmodel.rejectOrdersResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_reject_orders.visibility = View.GONE
+            root.swiperefresh_reject_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
                     var list =response.data
@@ -122,31 +168,16 @@ class RejectOrdersFragment : Fragment() {
                     errorAlertDialog(response.exception)
                 }
             }
-        }
+        })
 
 
 
-
-        return root
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getRejectOrders()
-    }
 
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
+    fun orderUpdateObserver(){
 
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
-    }
-
-    fun orderUpdate(orderResponse : OrderRespons){
-
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_reject_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
@@ -169,9 +200,10 @@ class RejectOrdersFragment : Fragment() {
                     Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        })
 
-        viewmodel.orderStatusUpdate(orderResponse,1,"")
+
+
     }
 
 

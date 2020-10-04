@@ -10,6 +10,7 @@ const val CONFIRMED_ORDERS_PAGE_INDEX = 1
 const val PACKED_ORDERS_PAGE_INDEX = 2
 const val DELIVERY_ORDERS_PAGE_INDEX = 3
 const val DELIVERED_ORDERS_PAGE_INDEX = 4
+const val STORE_ORDERS_PAGE_INDEX = 5
 
 class OrdersViewPagerAdapter (fragment: Fragment) : FragmentStateAdapter(fragment) {
     private val tabFragmentsCreators: Map<Int, () -> Fragment> = mapOf(
@@ -17,7 +18,8 @@ class OrdersViewPagerAdapter (fragment: Fragment) : FragmentStateAdapter(fragmen
         CONFIRMED_ORDERS_PAGE_INDEX to { ConfirmedOrdersFragment() },
         PACKED_ORDERS_PAGE_INDEX to { PackedOrdersFragment() },
         DELIVERY_ORDERS_PAGE_INDEX to { DeliveryOrderFragment() },
-        DELIVERED_ORDERS_PAGE_INDEX to { DeliveredOrdersFragment() }
+        DELIVERED_ORDERS_PAGE_INDEX to { DeliveredOrdersFragment() },
+        STORE_ORDERS_PAGE_INDEX to { StoreFragment() }
     )
     override fun getItemCount() = tabFragmentsCreators.size
     override fun createFragment(position: Int): Fragment {

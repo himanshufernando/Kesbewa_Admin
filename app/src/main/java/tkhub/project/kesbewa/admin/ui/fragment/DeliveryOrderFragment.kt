@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import coil.ImageLoader
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import coil.request.LoadRequest
 import coil.size.Scale
@@ -63,11 +63,7 @@ class DeliveryOrderFragment : Fragment() {
         root.recyclerView_delivery_orders.adapter = adapter
 
 
-        if(!InternetConnection.checkInternetConnection()){
-            errorAlertDialog(AppPrefs.errorNoInternet())
-        }
 
-        viewmodel.getDeliveryOrders()
         adapter.setOnItemClickListener(object : DeliveryOrdersAdapter.ClickListener {
             override fun onClick(orderRespons: OrderRespons, aView: View) {
                 when (aView.id) {
@@ -93,7 +89,11 @@ class DeliveryOrderFragment : Fragment() {
                             .setContentText("Are you sure, you want to pass to delivery ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                orderUpdate(orderRespons)
+                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                                    orderUpdateObserver()
+                                }
+                                viewmodel.orderStatusUpdate(orderRespons,4,"")
+
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -109,8 +109,47 @@ class DeliveryOrderFragment : Fragment() {
         })
 
 
-        viewmodel.deliveryOrdersResponse.observe(viewLifecycleOwner) { response ->
+        root.swiperefresh_delivery_orders.setOnRefreshListener {
+            if (!viewmodel.deliveryOrdersResponse.hasObservers()) {
+                deliveryOrdersResponseObserver()
+            }
+            viewmodel.getDeliveryOrders()
+        }
+
+
+
+        return root
+
+    }
+    override fun onStop() {
+        if (::imageLoader.isInitialized) {
+            imageLoader.shutdown()
+        }
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.deliveryOrdersResponse.removeObservers(viewLifecycleOwner)
+        super.onStop()
+    }
+    override fun onResume() {
+        super.onResume()
+        if(!InternetConnection.checkInternetConnection()){
+            errorAlertDialog(AppPrefs.errorNoInternet())
+        }
+
+        if (!viewmodel.deliveryOrdersResponse.hasObservers()) {
+            deliveryOrdersResponseObserver()
+        }
+        viewmodel.getDeliveryOrders()
+    }
+    override fun onPause() {
+        super.onPause()
+        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
+        viewmodel.deliveryOrdersResponse.removeObservers(viewLifecycleOwner)
+
+    }
+    fun deliveryOrdersResponseObserver(){
+        viewmodel.deliveryOrdersResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_delivery_orders.visibility = View.GONE
+            root.swiperefresh_delivery_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
                     var list =response.data
@@ -127,45 +166,12 @@ class DeliveryOrderFragment : Fragment() {
                     errorAlertDialog(response.exception)
                 }
             }
-        }
-
-
-
-        viewmodel.pastOrders.observe(this) { response ->
-            root.layout_loading_delivery_orders.visibility = View.GONE
-            when (response) {
-                is KesbewaResult.Success -> {
-                    var list = response.data
-                    adapterCustomerPast.submitList(list.reversed())
-                }
-                is KesbewaResult.ExceptionError.ExError -> {
-                    Toast.makeText(activity, response.exception.message, Toast.LENGTH_SHORT).show()
-                }
-                is KesbewaResult.LogicError.LogError -> {
-                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-
-
-        return root
+        })
 
     }
-    override fun onStop() {
-        if (::imageLoader.isInitialized) {
-            imageLoader.shutdown()
-        }
-        viewmodel.orderUpdateResponse.removeObservers(viewLifecycleOwner)
-        super.onStop()
-    }
-    override fun onResume() {
-        super.onResume()
-        viewmodel.getDeliveryOrders()
-    }
 
-    fun orderUpdate(orderResponse : OrderRespons){
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner) { response ->
+    fun orderUpdateObserver(){
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer {response ->
             root.layout_loading_delivery_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
@@ -190,9 +196,8 @@ class DeliveryOrderFragment : Fragment() {
                     Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        })
 
-        viewmodel.orderStatusUpdate(orderResponse,5,"")
     }
 
 

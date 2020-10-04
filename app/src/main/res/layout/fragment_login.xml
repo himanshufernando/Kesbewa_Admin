@@ -151,9 +151,9 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="100dp"
-            android:onClick="@{(view) -> loginBindingView.login(view)}"
             android:background="@drawable/bg_btn_theam_lite"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
@@ -163,7 +163,6 @@
                 android:fontFamily="@font/diavlo_light"
                 android:inputType="textCapCharacters"
                 android:text="Login"
-                android:onClick="@{(view) -> loginBindingView.login(view)}"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/babypowder"

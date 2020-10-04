@@ -33,14 +33,16 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textview1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@{orderitem.pro_name}"
                 android:textColor="@color/textcolor0"
                 android:textSize="14sp"
                 app:fontFamily="@font/diavlo_medium"
+                app:layout_constraintEnd_toStartOf="@+id/appCompatTextView20"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_cart_product"
                 app:layout_constraintTop_toTopOf="parent"
@@ -62,18 +64,18 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                tools:text="250"
-                android:text="@{Double.toString(orderitem.pro_total_price) + ` LKR`}"
+                android:id="@+id/appCompatTextView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                app:fontFamily="@font/diavlo_medium"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
+                android:text="@{Double.toString(orderitem.pro_total_price) + ` LKR`}"
                 android:textColor="@color/textcolor0"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="14sp"
+                app:fontFamily="@font/diavlo_medium"
                 app:layout_constraintRight_toRightOf="parent"
-               />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="250" />
 
 
 

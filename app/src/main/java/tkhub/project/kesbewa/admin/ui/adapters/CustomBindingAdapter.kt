@@ -14,6 +14,7 @@ import tkhub.project.kesbewa.admin.KesbewaAdmin
 import tkhub.project.kesbewa.admin.data.models.CartItem
 import tkhub.project.kesbewa.admin.data.models.Customer
 import tkhub.project.kesbewa.admin.data.models.DeliveryAddress
+import tkhub.project.kesbewa.admin.data.models.OrderRespons
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 
 object CustomBindingAdapter {
@@ -51,6 +52,46 @@ object CustomBindingAdapter {
         }
         view.text = fulladdress
     }
+
+    @BindingAdapter("setDispatch")
+    @JvmStatic
+    fun setDispatch(view: AppCompatTextView, orderRespons: OrderRespons) {
+        if(orderRespons.order_dispatch_type == "STORE"){
+            view.text =orderRespons.order_store_location
+        }else{
+            var deliveryAddress = orderRespons.delivery_address
+            var fulladdress = if(!AppPrefs.checkValidString(deliveryAddress.user_address_two!!)){
+                (deliveryAddress.user_address_number + " ," +deliveryAddress.user_address_one + ", "+ "\n"
+                        + deliveryAddress.user_address_two + ", "+ "\n"
+                        + deliveryAddress.user_address_city + ", "+ "\n"
+                        + deliveryAddress.user_address_district)
+            }else{
+                (deliveryAddress.user_address_number + " ," +deliveryAddress.user_address_one + ", "+ "\n"
+                        + deliveryAddress.user_address_city + ", "+ "\n"
+                        + deliveryAddress.user_address_district)
+            }
+            view.text = fulladdress
+        }
+
+
+    }
+
+
+
+
+    @BindingAdapter("setDispatchType")
+    @JvmStatic
+    fun setDispatchType(view: AppCompatTextView, orderRespons: OrderRespons) {
+
+        if(orderRespons.order_dispatch_type == "STORE"){
+            view.text = "STORE PICK UP"
+        }else{
+            view.text = "DELIVERY ADDRESS"
+        }
+
+    }
+
+
 
     @BindingAdapter("setCustomerName")
     @JvmStatic

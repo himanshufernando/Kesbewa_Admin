@@ -43,6 +43,8 @@ class LoginRepo (context: Context) {
             else -> {
                 var pushid = AppPrefs.getStringKeyValuePrefs(mContext, AppPrefs.KEY_PUSH_TOKEN)
 
+                println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa pushid    :   "+pushid)
+
                 val query: Query =
                     userRef?.orderByChild("admin_password")!!.equalTo((user.admin_number + user.admin_password))
                 query.addListenerForSingleValueEvent(object : ValueEventListener {

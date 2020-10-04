@@ -7,6 +7,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.DeliveryOrderFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh_delivery_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_delivery_orders"
         android:layout_width="match_parent"
@@ -19,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/listview_new_orders"
         tools:visibility="visible" />
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_loading_delivery_orders"

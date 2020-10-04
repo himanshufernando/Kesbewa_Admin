@@ -1,2 +1,3 @@
-rootProject.name='Kesbewa Admin'
 include ':app'
+rootProject.name='Kesbewa Admin'
+

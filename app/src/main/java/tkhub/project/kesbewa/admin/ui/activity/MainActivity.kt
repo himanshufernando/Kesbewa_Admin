@@ -23,6 +23,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.installations.FirebaseInstallations
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
@@ -44,6 +45,18 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
             WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
         )
         setContentView(R.layout.activity_main)
+
+        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa FirebaseInstallations token    :   "+ task.result)
+
+            } else {
+                println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa FirebaseInstallations token   fail  :   ")
+            }
+        }
+
+
+
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)

@@ -155,4 +155,13 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/fragment_product_image"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.AddProductImagesFragment"
+        android:label="Fragment Products Image"
+        tools:layout="@layout/fragment_add_product_images">
+
+    </fragment>
+
 </navigation>

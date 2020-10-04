@@ -26,6 +26,7 @@
     <string name="viewpager_packed_orders">PACKED</string>
     <string name="viewpager_delivery_orders">DELIVERY</string>
     <string name="viewpager_delivered_orders">DELIVERED</string>
+    <string name="viewpager_store_orders">STORE</string>
 
     <string name="viewpager_complete_orders">COMPLETE</string>
     <string name="viewpager_reject_orders">REJECT</string>
