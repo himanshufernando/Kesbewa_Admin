@@ -90,11 +90,11 @@ class AddProductImagesFragment : Fragment() {
                     ).show()
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
-                    Toast.makeText(
-                        activity,
-                        response.exception.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    var errorAddress = NetworkError()
+                    errorAddress.errorMessage = response.exception.message.toString()
+                    errorAddress.errorCode = ""
+
+                    errorAlertDialog(errorAddress)
                 }
                 is KesbewaResult.LogicError.LogError -> {
                     errorAlertDialog(response.exception)

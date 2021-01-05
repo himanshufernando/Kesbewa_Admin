@@ -106,13 +106,15 @@ object AppPrefs {
     fun genarateUniqCode(): Long {
         val c: Calendar = Calendar.getInstance()
         var numberFromTime =
+            c.get(Calendar.YEAR).toString() +
             c.get(Calendar.MONTH).toString() +
                     c.get(Calendar.DATE).toString() +
-                    c.get(Calendar.YEAR).toString() +
                     c.get(Calendar.HOUR).toString() +
+                    ((1..100).random()).toString()+
                     c.get(Calendar.MINUTE).toString() +
                     c.get(Calendar.SECOND).toString() +
-                    c.get(Calendar.MILLISECOND).toString() + ((1..1000).random()).toString()
+                    c.get(Calendar.MILLISECOND).toString() +
+                    ((1..1000).random()).toString()
 
         return numberFromTime.toLong()
     }

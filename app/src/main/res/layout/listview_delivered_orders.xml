@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/diavlo_light"
-                android:text="@{String.valueOf(newordersitem.order_date)}"
+                app:setTimeStampToString="@{newordersitem.order_date}"
                 android:textColor="@color/textcolor2"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView4"

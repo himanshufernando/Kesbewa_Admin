@@ -107,10 +107,19 @@ class NewOrdersFragment : Fragment() {
                             .setContentText("Are you sure you want to confirm ?")
                             .setConfirmText("Yes")
                             .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
-                                if (!viewmodel.orderUpdateResponse.hasObservers()) {
+                               /* if (!viewmodel.orderUpdateResponse.hasObservers()) {
                                     orderUpdate(orderRespons)
                                 }
-                                viewmodel.orderStatusUpdate(orderRespons, 1, "")
+                                viewmodel.orderStatusUpdate(orderRespons, 1, "")*/
+
+                                if (orderRespons.itemlist.size < 20) {
+                                    generatePDFOnlyOnePage(orderRespons)
+                                } else {
+                                    generatePDFMoreThanOnePage(orderRespons)
+                                }
+
+
+
                                 sDialog.dismissWithAnimation()
 
                             })
@@ -246,12 +255,12 @@ fun orderUpdate(orderResponse: OrderRespons) {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                if (orderResponse.itemlist.size < 20) {
+              /*  if (orderResponse.itemlist.size < 20) {
                     generatePDFOnlyOnePage(orderResponse)
                 } else {
                     generatePDFMoreThanOnePage(orderResponse)
                 }
-
+*/
                 if (::dialogReject.isInitialized) {
                     if (dialogReject.isShowing) {
                         dialogReject.dismiss()
@@ -803,7 +812,7 @@ fun pdfFooterCreator(canvas: Canvas, paint: Paint, orderRespons: OrderRespons) {
         dinamicY = 1020f
         canvas.drawText("Delivery", 540.0f, dinamicY, paint)
         canvas.drawText(
-            ": RS " + orderRespons.order_subtotal_total.toString(),
+            ": RS " + orderRespons.order_delivery_chargers.toString(),
             650.0f,
             dinamicY,
             paint
@@ -858,16 +867,41 @@ fun saveCreatedPDF(doc: PdfDocument, orderRespons: OrderRespons) {
         doc.writeTo(FileOutputStream(filePath));
         doc.close()
 
-        //  sendAdminKesbewa(targetPdf,orderRespons)
-        //  sendAdminAshan(targetPdf,orderRespons)
-        //   sendAdminCharith(targetPdf,orderRespons)
-
+           sendAdminKesbewa(targetPdf,orderRespons)
+           sendAdminAshan(targetPdf,orderRespons)
+           sendAdminCharith(targetPdf,orderRespons)
+           sendAdminHimanshu(targetPdf,orderRespons)
 
     } catch (e: Exception) {
 
     }
 
 }
+
+
+    fun sendAdminHimanshu(path: String, orderRespons: OrderRespons) {
+        MaildroidX.Builder()
+            .smtp("node233.r-usdatacenter.register.lk")
+            .smtpUsername("no-reply@kesbewa.com")
+            .smtpPassword("]U7~Ruq0V8fV")
+            .port("465")
+            .type(MaildroidXType.HTML)
+            .to("himanshu.fernando@gmail.com")
+            .from("no-reply@kesbewa.com")
+            .subject(orderRespons.order_code + " order confirmation Invoice")
+            .body("invoice")
+            .attachment(path)
+            .onCompleteCallback(object : MaildroidX.onCompleteCallback {
+                override val timeout: Long = 10000
+                override fun onSuccess() {
+
+                }
+
+                override fun onFail(errorMessage: String) {
+                }
+            })
+            .mail()
+    }
 
 fun sendAdminCharith(path: String, orderRespons: OrderRespons) {
     MaildroidX.Builder()

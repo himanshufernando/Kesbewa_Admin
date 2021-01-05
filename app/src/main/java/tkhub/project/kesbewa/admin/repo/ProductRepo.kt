@@ -58,11 +58,15 @@ class ProductRepo(context: Context) {
             }
             else -> {
 
-                var unxId = AppPrefs.genarateUniqCode()
-                var id = pro.pro_code+"_"+unxId.toString()
-                pro.img_id = unxId
+                var unxId = genarateUniqCode()
+                var id = pro.pro_code+"_"+genarateUniqCode()
+                pro.img_id = unxId.toLong()
+
+                println("ssssssssssssssssssssssssssssssssssssss  pro.pro_code : "+pro.pro_code )
 
                 productsImage?.child(id)?.setValue(pro)
+
+
 
                 errorAddress.errorMessage = "New Address url successfully"
                 errorAddress.errorCode = "New URL"
@@ -77,5 +81,19 @@ class ProductRepo(context: Context) {
         awaitClose { this.cancel() }
     }
 
+
+    fun genarateUniqCode(): String {
+        val c: Calendar = Calendar.getInstance()
+        var numberFromTime =
+                    c.get(Calendar.MONTH).toString() +
+                    c.get(Calendar.DATE).toString() +
+                    c.get(Calendar.HOUR).toString() +
+                    c.get(Calendar.MINUTE).toString() +
+                    c.get(Calendar.SECOND).toString() +
+                    c.get(Calendar.MILLISECOND).toString() +
+                    ((1..10000).random()).toString()
+
+        return numberFromTime
+    }
 
 }

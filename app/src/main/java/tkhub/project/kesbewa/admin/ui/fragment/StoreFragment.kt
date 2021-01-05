@@ -90,7 +90,7 @@ class StoreFragment : Fragment() {
                                 if (!viewmodel.orderUpdateResponse.hasObservers()) {
                                     orderUpdateResponseObserver()
                                 }
-                                viewmodel.orderStatusUpdate(orderRespons,6,"")
+                                viewmodel.orderStatusUpdate(orderRespons,5,"")
 
                                
                                 sDialog.dismissWithAnimation()

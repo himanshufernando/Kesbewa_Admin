@@ -1,10 +1,8 @@
 package tkhub.project.kesbewa.admin.ui.adapters
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,10 +10,12 @@ import coil.api.load
 import com.bumptech.glide.Glide
 import tkhub.project.kesbewa.admin.KesbewaAdmin
 import tkhub.project.kesbewa.admin.data.models.CartItem
-import tkhub.project.kesbewa.admin.data.models.Customer
 import tkhub.project.kesbewa.admin.data.models.DeliveryAddress
 import tkhub.project.kesbewa.admin.data.models.OrderRespons
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 object CustomBindingAdapter {
 
@@ -97,7 +97,7 @@ object CustomBindingAdapter {
     @JvmStatic
     fun setCustomerName(view: AppCompatTextView, name: String) {
         if(name.length >20){
-            view.text=name.substring(0,18)+"..."
+            view.text=name.substring(0, 18)+"..."
         }else{
             view.text=name
         }
@@ -106,7 +106,7 @@ object CustomBindingAdapter {
 
     @BindingAdapter("setUserPastOrdersItem")
     @JvmStatic
-    fun setUserPastOrdersItem(view: RecyclerView,cartItems: List<CartItem>?) {
+    fun setUserPastOrdersItem(view: RecyclerView, cartItems: List<CartItem>?) {
         if (cartItems != null) {
             val historyAdapter = CustomerPastOrderItemsAdapter()
             view.adapter = historyAdapter
@@ -122,16 +122,16 @@ object CustomBindingAdapter {
 
     @BindingAdapter("setCustomerOrderStatus")
     @JvmStatic
-    fun setCustomerOrderStatus(view: AppCompatTextView,status: Int) {
+    fun setCustomerOrderStatus(view: AppCompatTextView, status: Int) {
          var statusInWord=""
         when(status){
-             0 -> statusInWord = "New Order"
-             1 -> statusInWord = "Confirmed"
-             2-> statusInWord = "Packed"
-             3-> statusInWord = "In Transit"
-             4-> statusInWord = "Delivered"
-             5-> statusInWord = "Completed"
-            6-> statusInWord = "Reject"
+            0 -> statusInWord = "New Order"
+            1 -> statusInWord = "Confirmed"
+            2 -> statusInWord = "Packed"
+            3 -> statusInWord = "In Transit"
+            4 -> statusInWord = "Delivered"
+            5 -> statusInWord = "Completed"
+            6 -> statusInWord = "Reject"
          }
         view.text = statusInWord
 
@@ -145,6 +145,23 @@ object CustomBindingAdapter {
       Glide.with(KesbewaAdmin.applicationContext())
            .load(pro_cover_img)
           .into(view)
+    }
+
+
+    @BindingAdapter("setOrderDate")
+    @JvmStatic
+    fun setOrderDate(view: AppCompatTextView, date: Long) {
+        val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
+        cal.timeInMillis = date
+        val sdf = SimpleDateFormat("dd MMMM, yyyy")
+        view.text = sdf.format(cal.time)
+
+    }
+    @BindingAdapter("setTimeStampToString")
+    @JvmStatic
+    fun setTimeStampToString(view: TextView, timeStamp: Long) {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.US)
+        view.text = sdf.format(timeStamp)
     }
 
 }
