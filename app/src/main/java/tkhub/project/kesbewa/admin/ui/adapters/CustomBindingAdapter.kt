@@ -77,7 +77,19 @@ object CustomBindingAdapter {
     }
 
 
+    @BindingAdapter("setOrderDetailsExpand")
+    @JvmStatic
+    fun setOrderDetailsExpand(view: RecyclerView, status: Boolean) {
+        println("sssssssssssssssssssssssssssss status "+status)
 
+        if(status){
+            view.visibility = View.VISIBLE
+        }else{
+            view.visibility = View.GONE
+        }
+
+
+    }
 
     @BindingAdapter("setDispatchType")
     @JvmStatic

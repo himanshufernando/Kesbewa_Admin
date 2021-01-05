@@ -334,6 +334,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
+                <ImageView
+                    android:id="@+id/imageview_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{clickListener}"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatTextView17"
+                    app:layout_constraintTop_toBottomOf="@+id/imageview_address_details" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -348,6 +364,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_address" />
 
 
+
+       <!-- <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_recyclerView_order_items"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cl_buttons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3">
+
+            <ImageView
+                android:id="@+id/imageview_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{clickListener}"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_order_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
+                android:orientation="vertical"
+                app:setCurrentItems="@{newordersitem.itemlist}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_arrow"
+                tools:listitem="@layout/listview_order_item"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+           <!-- app:setOrderDetailsExpand="@{newordersitem.is_order_details_expain}"-->
+
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_order_items"
                 android:layout_width="match_parent"
@@ -359,6 +417,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider3"
                 app:setCurrentItems="@{newordersitem.itemlist}"
+                app:setOrderDetailsExpand="@{newordersitem.is_order_details_expain}"
                 tools:layout_height="100dp"
                 tools:listitem="@layout/listview_order_item"
                 tools:visibility="visible" />

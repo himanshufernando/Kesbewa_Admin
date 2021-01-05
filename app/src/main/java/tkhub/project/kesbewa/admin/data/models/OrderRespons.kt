@@ -26,8 +26,9 @@ data class OrderRespons (
     var itemlist: List<CartItem>,
     var admin: String,
     var order_dispatch_type: String,
-    var order_prmo: Promo,
-    var order_store_location : String
+    var order_promo: Promo,
+    var order_store_location : String,
+    var is_order_details_expain : Boolean
 
 ) {
     constructor() : this("", "","","",
@@ -35,7 +36,7 @@ data class OrderRespons (
         0, "","",0,0.0
         ,0.0,0.0,0.0,"" ,
         0,"","3-6",DeliveryAddress(), Customer(),emptyList(),"","",
-        Promo(),""
+        Promo(),"",false
     )
 
 

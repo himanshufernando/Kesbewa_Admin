@@ -41,6 +41,13 @@ class HomeRepo(context: Context) {
                     val post = postSnapshot.getValue(OrderRespons::class.java)
                     list.add(post!!)
                 }
+
+
+
+
+                list.sortBy { it.order_date }
+
+
                 offer(list)
 
             }
@@ -261,7 +268,7 @@ class HomeRepo(context: Context) {
             var orderUpdateStatus = OrderStatus()
 
             var user = AppPrefs.getUserPrefs(mContext!!, AppPrefs.KEY_USER)
-            var unxId = appPref.genarateUniqCode()
+            var unxId =genarateUniqCode()
 
             orderUpdateStatus.order_status_id = unxId.toString()
             orderUpdateStatus.order_status_order_id = orderRespons.order_id
@@ -288,7 +295,17 @@ class HomeRepo(context: Context) {
             awaitClose { this.cancel() }
 
         }
+    fun genarateUniqCode(): Long {
+        val c: Calendar = Calendar.getInstance()
+        var numberFromTime =
+            c.get(Calendar.DATE).toString() +
+                    c.get(Calendar.HOUR).toString() +
+                    c.get(Calendar.MINUTE).toString() +
+                    c.get(Calendar.SECOND).toString() +
+                    c.get(Calendar.MILLISECOND).toString() + ((1..100000).random()).toString()
 
+        return numberFromTime.toLong()
+    }
 
     suspend fun getOrdersBuyOrder(value: String): Flow<ArrayList<OrderRespons>?> = callbackFlow {
         lateinit var query: Query
