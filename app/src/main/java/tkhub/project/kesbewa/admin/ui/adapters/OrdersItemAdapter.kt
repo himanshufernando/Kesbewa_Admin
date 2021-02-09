@@ -10,6 +10,7 @@ import tkhub.project.kesbewa.admin.databinding.ListviewOrderItemBinding
 
 class OrdersItemAdapter : ListAdapter<CartItem, RecyclerView.ViewHolder>(OrderItemDiffCallback()) {
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val ordersitem = getItem(position)
         (holder as OrdersItemViewHolder).bind(ordersitem)

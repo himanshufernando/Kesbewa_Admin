@@ -260,6 +260,8 @@ class HomeRepo(context: Context) {
 
             orderRef?.child(orderRespons.order_id)?.child("order_status")
                 ?.setValue(orderRespons.order_status)
+
+
             orderRef?.child(orderRespons.order_id)?.child("order_status_code")
                 ?.setValue(orderRespons.order_status_code)
             orderRef?.child(orderRespons.order_id)?.child("order_status_note")

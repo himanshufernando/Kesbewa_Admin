@@ -161,7 +161,22 @@
         android:name="tkhub.project.kesbewa.admin.ui.fragment.AddProductImagesFragment"
         android:label="Fragment Products Image"
         tools:layout="@layout/fragment_add_product_images">
+    </fragment>
 
+
+    <fragment
+        android:id="@+id/fragment_promocode"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.PromocodeFragment"
+        android:label="Fragment PromoCode"
+        tools:layout="@layout/fragment_promocode">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_invoice"
+        android:name="tkhub.project.kesbewa.admin.ui.fragment.InvoiceFragment"
+        android:label="Fragment PromoCode"
+        tools:layout="@layout/fragment_promocode">
     </fragment>
 
 </navigation>

@@ -80,7 +80,7 @@ class ConfirmedOrdersFragment : Fragment() {
 
 
         adapter.setOnItemClickListener(object : ConfirmedOrdersAdapter.ClickListener {
-            override fun onClick(orderRespons: OrderRespons, aView: View) {
+            override fun onClick(orderRespons: OrderRespons, aView: View,adapterPosition: Int) {
                 when (aView.id) {
                     R.id.imageview_customer_details -> {
                         if (::dialogCustomer.isInitialized) {
@@ -90,7 +90,12 @@ class ConfirmedOrdersFragment : Fragment() {
                         }
                         dialogCustomerDetails(orderRespons)
                     }
+                    R.id.imageview_arrow_con -> {
+                        println("ssssssssssssssssssssssssss")
+                        orderRespons.is_order_details_expain = !orderRespons.is_order_details_expain
+                        adapter.notifyItemChanged(adapterPosition)
 
+                    }
 
                     R.id.imageview_address_details -> {
                         val bundle =
@@ -107,10 +112,10 @@ class ConfirmedOrdersFragment : Fragment() {
                                 if (!viewmodel.orderUpdateResponse.hasObservers()) {
                                     orderUpdateObserver(orderRespons)
                                 }
-                                if(orderRespons.order_dispatch_type=="STORE"){
-                                    viewmodel.orderStatusUpdate(orderRespons,7,"")
-                                }else{
-                                    viewmodel.orderStatusUpdate(orderRespons,2,"")
+                                if (orderRespons.order_dispatch_type == "STORE") {
+                                    viewmodel.orderStatusUpdate(orderRespons, 7, "")
+                                } else {
+                                    viewmodel.orderStatusUpdate(orderRespons, 2, "")
                                 }
 
                                 sDialog.dismissWithAnimation()
@@ -140,7 +145,7 @@ class ConfirmedOrdersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(!InternetConnection.checkInternetConnection()){
+        if (!InternetConnection.checkInternetConnection()) {
             errorAlertDialog(AppPrefs.errorNoInternet())
         }
 
@@ -166,14 +171,14 @@ class ConfirmedOrdersFragment : Fragment() {
         viewmodel.confirmedOrdersResponse.removeObservers(viewLifecycleOwner)
     }
 
-    fun confirmedOrdersResponseObserver (){
+    fun confirmedOrdersResponseObserver() {
 
-        viewmodel.confirmedOrdersResponse.observe(viewLifecycleOwner, Observer {response ->
+        viewmodel.confirmedOrdersResponse.observe(viewLifecycleOwner, Observer { response ->
             root.layout_loading_confirmed_orders.visibility = View.GONE
             root.swiperefresh_confirmed_orders.isRefreshing = false
             when (response) {
                 is KesbewaResult.Success -> {
-                    var list =response.data
+                    var list = response.data
                     adapter.submitList(list.reversed())
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
@@ -192,9 +197,9 @@ class ConfirmedOrdersFragment : Fragment() {
 
     }
 
-    fun orderUpdateObserver(orderResponse: OrderRespons){
+    fun orderUpdateObserver(orderResponse: OrderRespons) {
 
-        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer {response ->
+        viewmodel.orderUpdateResponse.observe(viewLifecycleOwner, Observer { response ->
             root.layout_loading_confirmed_orders.visibility = View.GONE
             when (response) {
                 is KesbewaResult.Success -> {
@@ -209,7 +214,7 @@ class ConfirmedOrdersFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    if(orderResponse.order_dispatch_type=="STORE"){
+                    if (orderResponse.order_dispatch_type == "STORE") {
 
                         if (orderResponse.itemlist.size < 20) {
                             generatePDFOnlyOnePage(orderResponse)
@@ -231,13 +236,13 @@ class ConfirmedOrdersFragment : Fragment() {
                     ).show()
                 }
                 is KesbewaResult.LogicError.LogError -> {
-                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, response.exception.errorMessage, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
 
     }
-
 
 
     private fun errorAlertDialog(networkError: NetworkError) {
@@ -941,17 +946,18 @@ class ConfirmedOrdersFragment : Fragment() {
             }
 
 
-            //    sendAdminKesbewa(targetPdf,orderRespons)
-            //    sendAdminAshan(targetPdf,orderRespons)
-            //  sendAdminCharith(targetPdf,orderRespons)
-            sendUser(targetPdf,orderRespons)
-             sendAdminHimanshu(targetPdf,orderRespons)
+            sendAdminKesbewa(targetPdf, orderRespons)
+            sendAdminAshan(targetPdf, orderRespons)
+            sendAdminCharith(targetPdf, orderRespons)
+            sendUser(targetPdf, orderRespons)
+            sendAdminHimanshu(targetPdf, orderRespons)
 
         } catch (e: Exception) {
 
         }
 
     }
+
     fun sendUser(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
             .smtp("node233.r-usdatacenter.register.lk")
@@ -967,11 +973,19 @@ class ConfirmedOrdersFragment : Fragment() {
             .onCompleteCallback(object : MaildroidX.onCompleteCallback {
                 override val timeout: Long = 10000
                 override fun onSuccess() {
-                    Toast.makeText(requireContext(), "Invoice Email send to user", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Invoice Email send to user",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onFail(errorMessage: String) {
-                    Toast.makeText(requireContext(), "Invoice Email NOT send to user "+errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Invoice Email NOT send to user " + errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
             .mail()
@@ -993,11 +1007,19 @@ class ConfirmedOrdersFragment : Fragment() {
             .onCompleteCallback(object : MaildroidX.onCompleteCallback {
                 override val timeout: Long = 10000
                 override fun onSuccess() {
-                    Toast.makeText(requireContext(), "Invoice Email send to Admin", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Invoice Email send to Admin",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onFail(errorMessage: String) {
-                    Toast.makeText(requireContext(), "Invoice Email NOT send to user "+errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Invoice Email NOT send to user " + errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
             .mail()

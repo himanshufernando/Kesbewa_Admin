@@ -33,7 +33,7 @@ data class OrderRespons (
 ) {
     constructor() : this("", "","","",
         0,"", "",
-        0, "","",0,0.0
+        0, "COD","cash on delivery",0,0.0
         ,0.0,0.0,0.0,"" ,
         0,"","3-6",DeliveryAddress(), Customer(),emptyList(),"","",
         Promo(),"",false

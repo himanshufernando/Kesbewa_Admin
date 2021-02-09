@@ -13,11 +13,13 @@ data class CartItem (
     var pro_total_qty: Int?,
     var pro_total_price: Double?,
     var cartStatus: Boolean?,
-    var pro_code: String?
+    var pro_code: String?,
+    var pro_weight: Double?,
+    var pro_stock: Int?
 ) {
     constructor() : this(0, 0,"",0.0,
         "","", "",
-        "", 0,0.0,false,""
+        "", 0,0.0,false,"",0.0,0
     )
 
 }

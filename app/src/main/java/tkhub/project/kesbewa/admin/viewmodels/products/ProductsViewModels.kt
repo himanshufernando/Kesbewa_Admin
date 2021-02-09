@@ -6,17 +6,21 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import tkhub.project.kesbewa.admin.KesbewaAdmin
+import tkhub.project.kesbewa.admin.data.db.AppDatabase
+import tkhub.project.kesbewa.admin.data.db.ProductsDao
+import tkhub.project.kesbewa.admin.data.models.CartItem
 import tkhub.project.kesbewa.admin.data.models.OrderRespons
 import tkhub.project.kesbewa.admin.data.models.ProductImage
+import tkhub.project.kesbewa.admin.data.models.Products
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.repo.ProductRepo
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 
-class ProductsViewModels(app: Context) : ViewModel() {
+class ProductsViewModels(productsDao: ProductsDao, app: Context) : ViewModel() {
 
     var ctx = app
     var appPref = AppPrefs
-    var repo = ProductRepo(ctx)
+    var repo = ProductRepo(productsDao,ctx)
 
     private val _getProducts = MutableLiveData<Int>()
     val getProducts: LiveData<Int> = _getProducts
@@ -25,10 +29,41 @@ class ProductsViewModels(app: Context) : ViewModel() {
     val addProductsImage: LiveData<ProductImage> = _addProductsImage
 
 
+    private val _updateSoldOut = MutableLiveData<Products>()
+    val updateSoldOut: LiveData<Products> = _updateSoldOut
+
+
+    val addProductsList: MutableLiveData<ArrayList<CartItem>> by lazy {
+        MutableLiveData<ArrayList<CartItem>>()
+    }
+
 
     init {
 
     }
+
+
+    fun updateSoldOut(pro : Products){
+
+        println("ssssssssssssssssssssssssssssss   55555  "+pro.pro_id.toString())
+        _updateSoldOut.value = pro
+
+    }
+
+    val updateSoldOutResponse = _updateSoldOut.switchMap { pro ->
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            try {
+                println("ssssssssssssssssssssssssssssss   999999  "+pro.pro_id.toString())
+                var cart = repo.updateSoldOut(pro)
+                emit(KesbewaResult.Success(cart))
+            } catch (ioException: Exception) {
+                emit(KesbewaResult.ExceptionError.ExError(ioException))
+            }
+
+        }
+    }
+
+
 
 
     fun getProducts(){
@@ -36,23 +71,19 @@ class ProductsViewModels(app: Context) : ViewModel() {
 
     }
 
-
-    val productsList = getProducts.switchMap { id ->
+    val productsList = getProducts.switchMap { status ->
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            var currentRes = repo.getProduct()
             try {
-                currentRes.collect { value ->
-                    if (value == null) {
-                        emit(KesbewaResult.LogicError.LogError(AppPrefs.errorSomethingWentWrong()))
-                    } else {
-                        emit(KesbewaResult.Success(value))
-                    }
-                }
+                var cart = repo.getProduct()
+                emit(KesbewaResult.Success(cart))
             } catch (ioException: Exception) {
                 emit(KesbewaResult.ExceptionError.ExError(ioException))
             }
+
         }
     }
+
+
 
 
     fun addProductImage(pro : ProductImage){
@@ -83,9 +114,10 @@ class ProductsViewModels(app: Context) : ViewModel() {
 
     object LiveDataVMFactory : ViewModelProvider.Factory {
         var app: Context = KesbewaAdmin.applicationContext()
+        private val productsDao = AppDatabase.getInstance(app).productsDao()
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return ProductsViewModels(app) as T
+            return ProductsViewModels(productsDao,app) as T
 
         }
     }

@@ -41,6 +41,30 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_edit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="@{clickListener}"
+            android:background="@color/babypowder"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_baseline_create_24"
+                app:layout_constraintRight_toRightOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView3"
                 android:layout_width="wrap_content"
@@ -128,36 +152,6 @@
                 tools:text="55" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="150dp"
-                android:fontFamily="@font/diavlo_medium"
-                android:text="TOTAL"
-                android:textColor="@color/textcolor3"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView7"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/appCompatTextView7" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="100dp"
-                android:fontFamily="@font/diavlo_medium"
-                android:text="@{String.valueOf(newordersitem.order_total_price)+` RS`}"
-                android:textColor="@color/textcolor2"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView8"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/appCompatTextView8"
-                tools:text="1500000" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView10"
@@ -168,10 +162,10 @@
                 android:text="Pay with"
                 android:textColor="@color/textcolor2"
                 android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView6" />
-
+                android:layout_marginLeft="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView7"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView7" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appCompatTextView11"
@@ -189,6 +183,154 @@
                 tools:text="55" />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="SUB TOTAL"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_subtotal_total)+` RS`}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView8"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView8"
+                tools:text="1500000" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView88"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="DELIVERY"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView99"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_delivery_chargers)+` RS`}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView88"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView88"
+                tools:text="1500000" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView888"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="DISCOUNT"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView99" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView999"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_discount)+` RS`}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView888"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView888"
+                tools:text="1500000" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView9999"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/textcolor2"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView888"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView999"
+                app:setPromoType="@{newordersitem}"
+                tools:text="1500000" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView777"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="TOTAL"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView6"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9999" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="@{String.valueOf(newordersitem.order_total_price)+` RS`}"
+                android:textColor="@color/textcolor2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView777"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView777"
+                tools:text="1500000" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView5656"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/diavlo_medium"
+                android:textColor="@color/colorRed"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView888"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView666"
+                app:setOrderNote="@{newordersitem}"
+                tools:text="1500000" />
+
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
@@ -197,7 +339,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/colorPrimaryDark"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView10" />
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView5656" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -365,45 +507,6 @@
 
 
 
-       <!-- <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_recyclerView_order_items"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/cl_buttons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider3">
-
-            <ImageView
-                android:id="@+id/imageview_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{clickListener}"
-                android:padding="5dp"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_order_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                android:orientation="vertical"
-                app:setCurrentItems="@{newordersitem.itemlist}"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_arrow"
-                tools:listitem="@layout/listview_order_item"
-                />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-           <!-- app:setOrderDetailsExpand="@{newordersitem.is_order_details_expain}"-->
-
-
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -416,7 +519,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider3"
-                app:setCurrentItems="@{newordersitem.itemlist}"
+                app:setCurrentItems="@{newordersitem}"
                 app:setOrderDetailsExpand="@{newordersitem.is_order_details_expain}"
                 tools:layout_height="100dp"
                 tools:listitem="@layout/listview_order_item"

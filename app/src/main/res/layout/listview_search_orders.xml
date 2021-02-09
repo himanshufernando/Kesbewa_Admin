@@ -401,7 +401,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4"
-                app:setCurrentItems="@{newordersitem.itemlist}"
+                app:setCurrentItems="@{newordersitem}"
                 tools:layout_height="100dp"
                 tools:listitem="@layout/listview_order_item"
                 tools:visibility="visible" />

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_recyclerView_add_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            tools:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_add_products"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_selectedProduct_products"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_001"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_coverimage"
+                    android:layout_width="100dp"
+                    android:layout_height="120dp"
+                    android:background="@color/babypowder"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_invoice_pro_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/textcolor1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/diavlo_medium"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/relativeLayout_coverimage"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_invoice_pro_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/textcolor1"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/diavlo_light"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textview_invoice_pro_name"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_invoice_pro_name"
+                    tools:text="LC001" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_invoice_pro_price_selling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:textColor="@color/textcolor1"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/diavlo_light"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textview_invoice_pro_code"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_invoice_pro_code"
+                    tools:text="5000" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textcolor1"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/diavlo_light"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textview_invoice_pro_itemcost"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_invoice_pro_price_selling"
+                    tools:text="5000" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_invoice_pro_itemcost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textColor="@color/textcolor1"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/diavlo_light"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textview_invoice_pro_price_selling"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_regular"
+                    tools:text="5000" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view_1s"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/textcolor0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_001" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView88"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="Quantity"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_1s" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_qty"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:inputType="number"
+                android:text="01"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView88"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatTextView88"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView88"
+                tools:text="1500000" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView888"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="Price"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView88"
+                app:layout_constraintTop_toBottomOf="@+id/edt_qty" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_price"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/diavlo_medium"
+                android:inputType="number"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView888"
+                app:layout_constraintStart_toStartOf="@+id/edt_qty"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView888"
+                tools:text="1500000" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Customize Print"
+                app:layout_constraintStart_toStartOf="@+id/edt_price"
+                app:layout_constraintTop_toBottomOf="@+id/edt_price" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView9999"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/diavlo_medium"
+                android:text="Size"
+                android:textColor="@color/textcolor3"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/appCompatTextView88"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview__size_s"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/textcolor5"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/diavlo_light"
+                android:gravity="center"
+                android:text="S"
+                android:textAllCaps="true"
+                android:textColor="@color/textcolorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView9999"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/guideline_1"
+                app:layout_constraintStart_toStartOf="@+id/checkBox"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView9999" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview__size_m"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/textcolor5"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/diavlo_light"
+                android:gravity="center"
+                android:text="M"
+                android:textAllCaps="true"
+                android:textColor="@color/textcolorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView9999"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/guideline_1"
+                app:layout_constraintStart_toEndOf="@+id/textview__size_s"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView9999" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview__size_l"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/textcolor5"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/diavlo_light"
+                android:gravity="center"
+                android:text="L"
+                android:textAllCaps="true"
+                android:textColor="@color/textcolorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView9999"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/guideline_1"
+                app:layout_constraintStart_toEndOf="@+id/textview__size_m"
+                app:layout_constraintTop_toTopOf="@+id/appCompatTextView9999" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_add"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:background="@color/colorPrimaryDark"
+                android:fontFamily="@font/diavlo_light"
+                android:gravity="center"
+                android:text="ADD"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/babypowder"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView9999" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_cancel"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/diavlo_light"
+                android:gravity="center"
+                android:text="Cancel"
+                android:textColor="@color/babypowder"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textview_add"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textview_add" />
+
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_add" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

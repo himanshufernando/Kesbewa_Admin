@@ -64,9 +64,8 @@ class CompleteOrdersFragment : Fragment() {
 
 
 
-
         adapter.setOnItemClickListener(object : CompleteOrdersAdapter.ClickListener {
-            override fun onClick(orderRespons: OrderRespons, aView: View) {
+            override fun onClick(orderRespons: OrderRespons, aView: View, adapterPosition: Int) {
                 when (aView.id) {
                     R.id.imageview_customer_details -> {
                         if (::dialogCustomer.isInitialized) {
@@ -77,9 +76,12 @@ class CompleteOrdersFragment : Fragment() {
                         dialogCustomerDetails(orderRespons)
                     }
 
+
+
                     R.id.imageview_address_details -> {
-                        val bundle = bundleOf("deliveryAddress" to  Gson().toJson(orderRespons.delivery_address))
-                        view?.findNavController()?.navigate(R.id.fragmentPastToMap,bundle)
+                        val bundle =
+                            bundleOf("deliveryAddress" to Gson().toJson(orderRespons.delivery_address))
+                        view?.findNavController()?.navigate(R.id.fragmentPastToMap, bundle)
                     }
 
                 }

@@ -21,6 +21,17 @@
             android:id="@+id/nav_products"
             android:icon="@drawable/ic_product"
             android:title="@string/menu_product" />
+        <item
+            android:id="@+id/nav_promocode"
+            android:icon="@drawable/ic_price_tag"
+            android:title="@string/menu_promocode" />
+
+        <item
+            android:id="@+id/nav_invoice"
+            android:icon="@drawable/ic_invoice"
+            android:title="@string/menu_invoice" />
+
+
 
     </group>
 </menu>

@@ -19,7 +19,8 @@
     <string name="menu_search">Search</string>
     <string name="menu_product">Products</string>
     <string name="home_second">Home Second</string>
-
+    <string name="menu_promocode">Promo Code</string>
+    <string name="menu_invoice">Invoice</string>
 
     <string name="viewpager_new_orders">NEW</string>
     <string name="viewpager_new_confirmed_orders">CONFIRMED</string>
@@ -36,6 +37,28 @@
     + "deliveryAddress.user_address_two" + ", "+ "\n"
     + "deliveryAddress.user_address_city" + ", "+ "\n"
     + "deliveryAddress.user_address_district"</string>
+
+
+
+    <string name="phone_number">Phone Number</string>
+    <string name="your_name">Name</string>
+    <string name="your_contact_number">Contact Number</string>
+    <string name="ex_himanshu_fernando">Ex : Himanshu Fernando</string>
+    <string name="your_email_address">Email Address</string>
+    <string name="ex_0737788888">Ex :0737788888</string>
+    <string name="ex_abc_gmail_com">Ex :abc@gmail.com</string>
+
+    <string name="checkout">Check Out</string>
+    <string name="street_address">Street address</string>
+    <string name="street_address_2">Street address 2 (optional)</string>
+
+
+
+    <string name="html">
+<h1 style="color: #4485b8;">You can edit <span style="background-color: #4485b8; color: #ffffff; padding: 0 5px;">this demo</span> text!</h1>
+<p><strong style="color: #000;">Basic usage:</strong> Paste your documents in the visual editor on the left or your HTML code in the source editor in the right. <br />Edit any of the two areas and see the other changing in real-time</p>
+<p></p>
+    </string>
 
 
 </resources>

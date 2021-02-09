@@ -26,14 +26,14 @@ class CompleteOrdersAdapter : ListAdapter<OrderRespons, RecyclerView.ViewHolder>
         mClickListener = aClickListener
     }
     interface ClickListener {
-        fun onClick(orderRespons: OrderRespons, aView: View)
+        fun onClick(orderRespons: OrderRespons, aView: View,adapterPosition: Int)
     }
     class OrdersItemViewHolder(private val binding: ListviewCompleteOrdersBinding ,var mClickListener: ClickListener ) :
 
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener { binding.newordersitem?.let { selectedProduct ->
-                mClickListener.onClick(selectedProduct,it)
+                mClickListener.onClick(selectedProduct,it,adapterPosition)
             } }
         }
         fun bind(orderRespons: OrderRespons) {

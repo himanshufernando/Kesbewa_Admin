@@ -36,17 +36,13 @@
             android:layout_height="wrap_content">
 
 
-
             <RelativeLayout
                 android:id="@+id/relativeLayout_coverimage"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
                 android:background="@color/babypowder"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyle"
@@ -57,8 +53,6 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginStart="10dp" />
-
-
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -79,31 +73,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
                 android:text="@{item.pro_name}"
                 android:textColor="@color/textcolor1"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="Lunch Sheets"
+                android:textSize="16sp"
+
                 app:fontFamily="@font/diavlo_medium"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout_coverimage" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/relativeLayout_coverimage"
+                tools:text="Lunch Sheets" />
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textview_home_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                tools:text="LC001"
                 android:text="@{item.pro_code}"
-                android:textColor="@color/textcolor0"
+                android:textColor="@color/textcolor1"
                 android:textSize="15sp"
                 app:fontFamily="@font/diavlo_light"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_home_proname" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_home_proname"
+                app:layout_constraintTop_toBottomOf="@+id/textview_home_proname"
+                tools:text="LC001" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -111,47 +106,129 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="10dp"
                 android:text="@{item.pro_make}"
-                tools:text="Lunch Sheets"
-                android:textColor="@color/textcolor0"
+                android:textColor="@color/textcolor1"
                 android:textSize="14sp"
+                android:layout_marginTop="5dp"
                 app:fontFamily="@font/diavlo_light"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_home_code" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_home_code"
+                app:layout_constraintTop_toBottomOf="@+id/textview_home_proname"
+                tools:text="Lunch Sheets" />
 
-            <TextView
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textview_home_teacherclass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textview_home_promake"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                tools:text="50"
-                android:text="@{Double.toString(item.pro_price) + ` LKR`}"
-                app:fontFamily="@font/diavlo_light"
+                android:text="@{`Selling `+Double.toString(item.pro_price) + ` LKR`}"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/textcolor1"
-                android:textSize="13sp"/>
+                android:textStyle="bold"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_home_code"
+                app:layout_constraintTop_toBottomOf="@+id/textview_home_code"
+                tools:text="5000" />
 
-            <TextView
-                android:id="@+id/textview_home_12"
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_55"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textview_home_teacherclass"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                tools:text="50dddddd"
-                android:text="@{Long.toString(item.pro_id)}"
-                app:fontFamily="@font/diavlo_light"
+                android:text="@{`Regular `+Double.toString(item.pro_price) + ` LKR`}"
                 android:textColor="@color/textcolor1"
-                android:textSize="15sp"/>
+                android:textStyle="bold"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintStart_toEndOf="@+id/textview_home_teacherclass"
+                app:layout_constraintTop_toBottomOf="@+id/textview_home_promake"
+                tools:text="5000" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_66"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Per Item Cost `+item.pro_per_item_cost + ` LKR`}"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textcolor1"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_home_teacherclass"
+                app:layout_constraintTop_toBottomOf="@+id/textview_home_teacherclass"
+                tools:text="5000" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_77"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Item Weight `+item.pro_weight + ` g`}"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textcolor1"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_home_teacherclass"
+                app:layout_constraintTop_toBottomOf="@+id/textview_66"
+                tools:text="5000" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_88"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`Stock `+item.pro_stock}"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textcolor1"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textview_home_teacherclass"
+                app:layout_constraintTop_toBottomOf="@+id/textview_77"
+                tools:text="5000" />
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_track_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:checked="@={item.sold_out}"
+                android:onClick="@{clickListener}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_88">
+
+
+            </androidx.appcompat.widget.SwitchCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_98"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textcolor1"
+                android:textSize="13sp"
+                app:fontFamily="@font/diavlo_light"
+                app:layout_constraintBottom_toBottomOf="@+id/sw_track_sort"
+                android:layout_marginRight="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/sw_track_sort"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sw_track_sort"
+                android:text="SOLDOUT" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

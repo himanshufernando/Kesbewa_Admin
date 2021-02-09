@@ -22,11 +22,20 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.*
 import com.google.firebase.installations.FirebaseInstallations
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tkhub.project.kesbewa.admin.R
+import tkhub.project.kesbewa.admin.data.db.AppDatabase
+import tkhub.project.kesbewa.admin.data.models.Products
+import tkhub.project.kesbewa.admin.data.models.Zone
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
+import java.util.ArrayList
 
 class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,8 +43,12 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
     lateinit var navController: NavController
     lateinit var navView: NavigationView
 
+    lateinit var zone : List<Zone>
+
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 35
+        var database: FirebaseDatabase? = FirebaseDatabase.getInstance()
+
     }
 
 
@@ -45,6 +58,12 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
             WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
         )
         setContentView(R.layout.activity_main)
+
+
+
+        getZones()
+        getProducts()
+        getZoneFromDB()
 
         FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -140,12 +159,12 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
         when (item.itemId) {
             R.id.nav_home ->{
                 if(fragmetID!=2){
-                    navController?.navigate(R.id.fragmentPastToHome)}
+                    navController?.navigate(R.id.fragment_home)}
                 }
 
             R.id.nav_past ->{
                 if(fragmetID!=3){
-                    navController?.navigate(R.id.fragmentMainToPast)}
+                    navController?.navigate(R.id.fragment_past)}
             }
 
             R.id.nav_search ->{
@@ -158,7 +177,92 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
                     navController?.navigate(R.id.fragment_products)}
             }
 
+            R.id.nav_promocode ->{
+                if(fragmetID!=6){
+                    navController?.navigate(R.id.fragment_promocode)}
+            }
+
+            R.id.nav_invoice ->{
+                if(fragmetID!=7){
+                    navController?.navigate(R.id.fragment_invoice)}
+            }
+
         }
         return true
     }
+
+
+    private fun getZoneFromDB(){
+        var zoneDAO = AppDatabase.getInstance(this).zoneDao()
+
+
+        var zoneList = ArrayList<Zone>()
+
+        GlobalScope.launch(Dispatchers.IO) {
+            zone = zoneDAO.selectZones()
+            zoneList = zone as ArrayList<Zone>
+        }
+
+
+
+
+
+    }
+
+
+    private fun getZones(){
+        var zoneRef: DatabaseReference? = database?.getReference("Zone")
+         var zoneDAO = AppDatabase.getInstance(this).zoneDao()
+
+        zoneRef?.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var list = ArrayList<Zone>()
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue(Zone::class.java)
+                    list.add(post!!)
+                    GlobalScope.launch(Dispatchers.IO) {
+                        zoneDAO.insertCart(post)
+                    }
+
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+    }
+
+
+    private fun getProducts(){
+        var productsRef: DatabaseReference? = database?.getReference("Products")
+        var productsDAO = AppDatabase.getInstance(this).productsDao()
+
+
+        productsRef?.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var list = ArrayList<Products>()
+                for (postSnapshot in dataSnapshot.children) {
+                    val post = postSnapshot.getValue(Products::class.java)
+
+
+
+                    list.add(post!!)
+                    GlobalScope.launch(Dispatchers.IO) {
+                        productsDAO.insertProducts(post)
+                    }
+
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+    }
+
 }

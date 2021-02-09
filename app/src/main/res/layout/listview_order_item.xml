@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
         <variable
             name="orderitem"
             type="tkhub.project.kesbewa.admin.data.models.CartItem" />
@@ -167,6 +169,8 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview5" />
+
+
 
 
 
