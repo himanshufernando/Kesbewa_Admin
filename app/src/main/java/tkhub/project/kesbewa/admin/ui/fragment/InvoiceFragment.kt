@@ -393,7 +393,7 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
                             orderDetails.order_code = orderCode
 
                             var unxId = genarateUniqCode()
-                            orderDetails.order_id = unxId.toString()
+                            orderDetails.order_id = unxId.toString()+"_"+orderCode
                             orderRef?.child(unxId.toString()+"_"+orderCode)?.setValue(orderDetails)
 
                             layout_loading_invoice.visibility = View.GONE
