@@ -1,11 +1,9 @@
 package tkhub.project.kesbewa.admin.ui.activity
 
-import android.Manifest
 import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,9 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.google.firebase.installations.FirebaseInstallations
@@ -35,7 +31,8 @@ import tkhub.project.kesbewa.admin.data.db.AppDatabase
 import tkhub.project.kesbewa.admin.data.models.Products
 import tkhub.project.kesbewa.admin.data.models.Zone
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
-import java.util.ArrayList
+import java.security.MessageDigest
+import java.util.*
 
 class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelectedListener {
 
@@ -94,8 +91,36 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
 
         }
 
+        println("sssssssssssssssssssssssssssss "+ (md5("him789")))
+        println("sssssssssssssssssssssssssssss "+ (md5("him789")?.reversed()))
+
+
+
+
 
         navView.itemIconTintList = null;
+    }
+    fun md5(s: String): String? {
+        val MD5 = "MD5"
+        try {
+            // Create MD5 Hash
+            val digest = MessageDigest
+                .getInstance(MD5)
+            digest.update(s.toByteArray())
+            val messageDigest = digest.digest()
+
+            // Create Hex String
+            val hexString = StringBuilder()
+            for (aMessageDigest in messageDigest) {
+                var h = Integer.toHexString(0xFF and aMessageDigest.toInt())
+                while (h.length < 2) h = "0$h"
+                hexString.append(h)
+            }
+            return hexString.toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -244,7 +269,10 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
         productsRef?.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var list = ArrayList<Products>()
-                for (postSnapshot in dataSnapshot.children) {
+
+
+
+             /*   for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue(Products::class.java)
 
 
@@ -254,7 +282,7 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
                         productsDAO.insertProducts(post)
                     }
 
-                }
+                }*/
 
             }
 

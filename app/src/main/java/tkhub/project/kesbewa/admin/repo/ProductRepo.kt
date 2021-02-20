@@ -15,6 +15,7 @@ import tkhub.project.kesbewa.admin.services.network.InternetConnection
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 class ProductRepo(val productsDao: ProductsDao, context: Context) {
 
@@ -31,15 +32,53 @@ class ProductRepo(val productsDao: ProductsDao, context: Context) {
     }
 
 
-/*
-    suspend fun getProduct(): Flow<ArrayList<Products>?> = callbackFlow {
+    suspend fun getProductOnline(): Flow<ArrayList<ProductsModel>?> = callbackFlow {
 
         productsRef?.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var list = ArrayList<Products>()
+                var list = ArrayList<ProductsModel>()
                 for (postSnapshot in dataSnapshot.children) {
-                    val post = postSnapshot.getValue(Products::class.java)
-                    list.add(post!!)
+                    var item = ProductsModel().apply {
+                        pro_id = postSnapshot.child("pro_id").value as Long
+                        pro_name = postSnapshot.child("pro_name").value as String
+                        pro_price = (postSnapshot.child("pro_price").value as Long).toDouble()
+                        pro_make = postSnapshot.child("pro_make").value as String
+                        pro_description = postSnapshot.child("pro_description").value as String
+                        pro_cover_img = postSnapshot.child("pro_cover_img").value as String
+                        pro_catagory = postSnapshot.child("pro_catagory").value as String
+                        pro_code = postSnapshot.child("pro_code").value as String
+                        sold_out = postSnapshot.child("sold_out").value as Boolean
+                        pro_sort = (postSnapshot.child("pro_sort").value as Long).toInt()
+                        pro_video = postSnapshot.child("pro_video").value as String
+                        pro_note = postSnapshot.child("pro_note").value as String
+                        pro_price_regular =
+                            (postSnapshot.child("pro_price_regular").value as Long).toDouble()
+                        pro_per_item_cost = postSnapshot.child("pro_per_item_cost").value as String
+                        pro_weight = (postSnapshot.child("pro_weight").value as Long).toDouble()
+                        pro_stock = (postSnapshot.child("pro_stock").value as Long).toInt()
+
+                        var productSizeList = ArrayList<ProductSize>()
+
+                        var countID = 1
+                        for (itemSize in postSnapshot.child("size").children) {
+                            var itemSize = ProductSize().apply {
+                                sizeID = countID
+                                size = itemSize.child("size").value as String
+                                price = (itemSize.child("price").value as Long).toDouble()
+                                isAvailable = itemSize.child("isAvailable").value as Boolean
+                                stock = (itemSize.child("stock").value as Long).toInt()
+                                weight = (itemSize.child("weight").value as Long).toInt()
+
+                            }
+                            productSizeList.add(itemSize)
+                            countID++
+                        }
+                        size = productSizeList
+
+                    }
+
+
+                    list.add(item!!)
                 }
                 offer(list)
 
@@ -53,7 +92,6 @@ class ProductRepo(val productsDao: ProductsDao, context: Context) {
         awaitClose { this.cancel() }
 
     }
-*/
 
 
     suspend fun addProductImage(pro: ProductImage): Flow<NetworkError> = callbackFlow {
@@ -94,8 +132,8 @@ class ProductRepo(val productsDao: ProductsDao, context: Context) {
 
     suspend fun updateSoldOut(pro: Products): Flow<NetworkError> = callbackFlow {
 
-        println("ssssssssssssssssssssssssssssss   0000  "+pro.pro_id.toString())
-        println("ssssssssssssssssssssssssssssss   03030303  "+pro.sold_out)
+        println("ssssssssssssssssssssssssssssss   0000  " + pro.pro_id.toString())
+        println("ssssssssssssssssssssssssssssss   03030303  " + pro.sold_out)
 
         var errorAddress = NetworkError()
         when {
@@ -108,8 +146,8 @@ class ProductRepo(val productsDao: ProductsDao, context: Context) {
                 productsRef?.child(pro.pro_id.toString())?.child("sold_out")
                     ?.setValue(pro.sold_out)
 
-                println("ssssssssssssssssssssssssssssss   111111  "+pro.pro_id.toString())
-                println("ssssssssssssssssssssssssssssss   22222  "+pro.sold_out)
+                println("ssssssssssssssssssssssssssssss   111111  " + pro.pro_id.toString())
+                println("ssssssssssssssssssssssssssssss   22222  " + pro.sold_out)
 
 
                 productsRef?.child(pro.pro_id.toString())?.child("sold_out")?.setValue(pro.sold_out)

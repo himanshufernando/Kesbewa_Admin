@@ -19,22 +19,18 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-import kotlinx.android.synthetic.main.fragment_delivery_orders.view.*
-import kotlinx.android.synthetic.main.fragment_new_orders.view.*
+
 import kotlinx.android.synthetic.main.fragment_products.view.*
-import kotlinx.android.synthetic.main.fragment_search_orders.view.*
+
 
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.NetworkError
-import tkhub.project.kesbewa.admin.data.models.OrderRespons
-import tkhub.project.kesbewa.admin.data.models.Products
+import tkhub.project.kesbewa.admin.data.models.ProductsModel
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import tkhub.project.kesbewa.admin.services.network.InternetConnection
 import tkhub.project.kesbewa.admin.ui.activity.MainActivity
-import tkhub.project.kesbewa.admin.ui.activity.MainActivity.Companion.database
-import tkhub.project.kesbewa.admin.ui.adapters.DeliveryOrdersAdapter
-import tkhub.project.kesbewa.admin.ui.adapters.NewOrdersAdapter
+
 import tkhub.project.kesbewa.admin.ui.adapters.ProductsAdapter
 import tkhub.project.kesbewa.admin.viewmodels.products.ProductsViewModels
 import java.util.ArrayList
@@ -49,7 +45,7 @@ class ProductsFragment : Fragment() {
     private val adapter = ProductsAdapter()
     var alertDialog: AlertDialog? = null
 
-     var productList = ArrayList<Products>()
+     var productList = ArrayList<ProductsModel>()
 
     lateinit var database : FirebaseDatabase
 
@@ -70,7 +66,7 @@ class ProductsFragment : Fragment() {
         }
 
         adapter.setOnItemClickListener(object : ProductsAdapter.ClickListener {
-            override fun onClick(product: Products, aView: View) {
+            override fun onClick(product: ProductsModel, aView: View,adapterPosition: Int) {
 
                 when (aView.id) {
                     R.id.card_view_dealer_to_visits -> {
@@ -80,6 +76,26 @@ class ProductsFragment : Fragment() {
                             NavHostFragment.findNavController(this@ProductsFragment)
                                 .navigate(R.id.fragment_product_image, bundle)
                         }
+                    }
+
+
+                    R.id.imageView3 -> {
+
+                        if(product.is_order_details_expain){
+                            product.is_order_details_expain = !product.is_order_details_expain
+                            adapter.notifyItemChanged(adapterPosition)
+
+                        }else{
+                            for(item in productList){
+                                item.is_order_details_expain = false
+                            }
+                            product.is_order_details_expain = !product.is_order_details_expain
+                            adapter.notifyDataSetChanged()
+                        }
+
+
+
+
                     }
 
                     R.id.sw_track_sort -> {
@@ -154,10 +170,15 @@ class ProductsFragment : Fragment() {
         if (!InternetConnection.checkInternetConnection()) {
             errorAlertDialog(AppPrefs.errorNoInternet())
         }
-        if (!viewmodel.productsList.hasObservers()) {
+      /*  if (!viewmodel.productsList.hasObservers()) {
             productsListObserver()
         }
-        viewmodel.getProducts()
+        viewmodel.getProducts()*/
+
+        if (!viewmodel.productsListOnline.hasObservers()) {
+            productsListObserver()
+        }
+        viewmodel.getProductsOnline()
     }
 
     override fun onStop() {
@@ -168,12 +189,14 @@ class ProductsFragment : Fragment() {
 
 
     fun productsListObserver() {
-        viewmodel.productsList.observe(viewLifecycleOwner, Observer { response ->
+        viewmodel.productsListOnline.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is KesbewaResult.Success -> {
                     var list = response.data
                     var sortList = list.sortedBy { it.pro_sort }
                     productList = sortList.toCollection(ArrayList())
+
+                    root.cl_loading.visibility =View.GONE
                     adapter.submitList(productList)
                 }
                 is KesbewaResult.ExceptionError.ExError -> {
@@ -182,9 +205,11 @@ class ProductsFragment : Fragment() {
                         response.exception.message,
                         Toast.LENGTH_SHORT
                     ).show()
+                    root.cl_loading.visibility =View.GONE
                 }
                 is KesbewaResult.LogicError.LogError -> {
                     errorAlertDialog(response.exception)
+                    root.cl_loading.visibility =View.GONE
                 }
             }
         })
@@ -219,7 +244,7 @@ class ProductsFragment : Fragment() {
             adapter.submitList(productList)
             root.recyclerView_products.scrollToPosition(0)
         } else {
-            var filterdList= ArrayList<Products>()
+            var filterdList= ArrayList<ProductsModel>()
 
             for (pro in productList) {
 

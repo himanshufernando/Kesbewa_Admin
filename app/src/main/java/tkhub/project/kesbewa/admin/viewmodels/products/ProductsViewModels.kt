@@ -25,6 +25,9 @@ class ProductsViewModels(productsDao: ProductsDao, app: Context) : ViewModel() {
     private val _getProducts = MutableLiveData<Int>()
     val getProducts: LiveData<Int> = _getProducts
 
+    private val _getProductsOnline = MutableLiveData<Int>()
+    val getProductsOnline: LiveData<Int> = _getProductsOnline
+
     private val _addProductsImage = MutableLiveData<ProductImage>()
     val addProductsImage: LiveData<ProductImage> = _addProductsImage
 
@@ -82,6 +85,33 @@ class ProductsViewModels(productsDao: ProductsDao, app: Context) : ViewModel() {
 
         }
     }
+
+
+    fun getProductsOnline(){
+        _getProductsOnline.value = (1..1000).random()
+
+    }
+
+    val productsListOnline = getProductsOnline.switchMap { status ->
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            try {
+                var cart = repo.getProductOnline()
+
+                cart.collect { value ->
+                    if (value == null) {
+                        emit(KesbewaResult.LogicError.LogError(AppPrefs.errorSomethingWentWrong()))
+                    } else {
+                        emit(KesbewaResult.Success(value))
+                    }
+                }
+            } catch (ioException: Exception) {
+                emit(KesbewaResult.ExceptionError.ExError(ioException))
+            }
+
+        }
+    }
+
+
 
 
 

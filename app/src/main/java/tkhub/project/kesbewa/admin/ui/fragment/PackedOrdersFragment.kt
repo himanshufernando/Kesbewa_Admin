@@ -351,6 +351,10 @@ class PackedOrdersFragment : Fragment() {
                             "<!-- [if (IE)]></div><![endif]-->"
 
 
+
+
+
+
                     sendUser(selectedOrder)
                     sendAdminKesbewa(selectedOrder)
 
@@ -376,7 +380,7 @@ class PackedOrdersFragment : Fragment() {
 
     fun sendAdminKesbewa(orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -401,7 +405,7 @@ class PackedOrdersFragment : Fragment() {
 
 
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")

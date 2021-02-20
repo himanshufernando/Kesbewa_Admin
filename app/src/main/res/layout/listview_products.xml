@@ -10,7 +10,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="item"
-            type="tkhub.project.kesbewa.admin.data.models.Products" />
+            type="tkhub.project.kesbewa.admin.data.models.ProductsModel" />
 
     </data>
 
@@ -26,16 +26,70 @@
         android:layout_marginBottom="5dp"
         app:cardBackgroundColor="@color/babypowder"
         app:cardCornerRadius="5dp"
-        app:cardElevation="2dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardElevation="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                tools:visibility="visible"
+                app:setOrderDescriptionExpand="@{item.is_order_details_expain}"
+                app:layout_constraintTop_toBottomOf="@+id/cl_2">
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolorBlack"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:setProductDescription="@{item.pro_description}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/textcolor2"
+                    android:textSize="15sp"
+                    tools:text="sdsdsdsdsdsd sdsdsds sdsdsdsd sdsdsdsdsd sdsdsds sdsdsds sdsdsds sdsd sd s sdsdssdsdsdsds dsdsds  dsdsdsds dsds dsds dsds dsds sdsdsds sds d sds sds sds" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{clickListener}"
+                android:padding="10dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sw_track_sort"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
             <RelativeLayout
                 android:id="@+id/relativeLayout_coverimage"
                 android:layout_width="100dp"
@@ -167,38 +221,23 @@
                 tools:text="5000" />
 
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textview_77"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_order_items"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{`Item Weight `+item.pro_weight + ` g`}"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/textcolor1"
-                android:textStyle="bold"
-                android:textSize="13sp"
-                app:fontFamily="@font/diavlo_light"
-                app:layout_constraintRight_toRightOf="parent"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/sw_track_sort"
                 app:layout_constraintStart_toStartOf="@+id/textview_home_teacherclass"
                 app:layout_constraintTop_toBottomOf="@+id/textview_66"
-                tools:text="5000" />
+
+                app:setProductSizeItems="@{item}"
+                tools:listitem="@layout/listview_order_item"
+                tools:visibility="gone" />
 
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textview_88"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{`Stock `+item.pro_stock}"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/textcolor1"
-                android:textStyle="bold"
-                android:textSize="13sp"
-                app:fontFamily="@font/diavlo_light"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textview_home_teacherclass"
-                app:layout_constraintTop_toBottomOf="@+id/textview_77"
-                tools:text="5000" />
 
 
             <androidx.appcompat.widget.SwitchCompat
@@ -211,7 +250,7 @@
                 android:onClick="@{clickListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_88">
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_order_items">
 
 
             </androidx.appcompat.widget.SwitchCompat>
@@ -229,6 +268,13 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sw_track_sort"
                 android:text="SOLDOUT" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

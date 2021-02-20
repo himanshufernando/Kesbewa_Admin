@@ -1098,7 +1098,7 @@ class DeliveredOrdersFragment : Fragment() {
     }
     fun sendUser(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1124,7 +1124,7 @@ class DeliveredOrdersFragment : Fragment() {
 
     fun sendAdminHimanshu(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1149,7 +1149,7 @@ class DeliveredOrdersFragment : Fragment() {
 
     fun sendAdminCharith(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1174,7 +1174,7 @@ class DeliveredOrdersFragment : Fragment() {
 
     fun sendAdminAshan(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1198,7 +1198,7 @@ class DeliveredOrdersFragment : Fragment() {
 
     fun sendAdminKesbewa(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")

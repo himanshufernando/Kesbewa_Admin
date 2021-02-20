@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -14,10 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
 import tkhub.project.kesbewa.admin.KesbewaAdmin
 import tkhub.project.kesbewa.admin.R
-import tkhub.project.kesbewa.admin.data.models.CartItem
-import tkhub.project.kesbewa.admin.data.models.DeliveryAddress
-import tkhub.project.kesbewa.admin.data.models.OrderRespons
-import tkhub.project.kesbewa.admin.data.models.User
+import tkhub.project.kesbewa.admin.data.models.*
 import tkhub.project.kesbewa.admin.services.Perfrences.AppPrefs
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +23,43 @@ import java.util.*
 
 object CustomBindingAdapter {
 
+
+
+    @BindingAdapter("setOrderDescriptionExpand")
+    @JvmStatic
+    fun setOrderDescriptionExpand(view: ConstraintLayout, status: Boolean) {
+        if (status) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
+    }
+
+
+
+    @BindingAdapter("setProductDescription")
+    @JvmStatic
+    fun setProductDescription(view: AppCompatTextView, description: String) {
+
+        var discription = ""
+        var delimiter = "~"
+        val parts = description!!.split(delimiter)
+        for (po in parts) {
+            discription = "$discription* $po\n\n"
+        }
+        view.text = discription
+
+    }
+
+    @BindingAdapter("setProductSizeItems")
+    @JvmStatic
+    fun setProductSizeItems(view: RecyclerView, productSize: ProductsModel?) {
+        if (productSize != null) {
+            val proAdapter = ProductSizeAdapter()
+            view.adapter = proAdapter
+            proAdapter.submitList(productSize.size)
+        }
+    }
 
 
     @BindingAdapter("setCurrentItems")
@@ -110,15 +145,11 @@ object CustomBindingAdapter {
     @BindingAdapter("setOrderDetailsExpand")
     @JvmStatic
     fun setOrderDetailsExpand(view: RecyclerView, status: Boolean) {
-        println("sssssssssssssssssssssssssssss status " + status)
-
         if (status) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
         }
-
-
     }
 
     @BindingAdapter("setDispatchType")

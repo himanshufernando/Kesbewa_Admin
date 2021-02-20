@@ -1492,7 +1492,7 @@ class NewOrdersFragment : Fragment() {
 
 
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1513,6 +1513,7 @@ class NewOrdersFragment : Fragment() {
                 }
 
                 override fun onFail(errorMessage: String) {
+                    println("ssssssssssssssssssssssssssssssss neworders send user : "+errorMessage)
                     Toast.makeText(
                         requireContext(),
                         "Invoice Email NOT send to user $errorMessage",
@@ -1526,7 +1527,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminHimanshu(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1559,7 +1560,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminCharith(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1584,7 +1585,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminAshan(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1608,7 +1609,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminKesbewa(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("node233.r-usdatacenter.register.lk")
+            .smtp("mail.kesbewa.com")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")

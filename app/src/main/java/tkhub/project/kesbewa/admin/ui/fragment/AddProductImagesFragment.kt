@@ -33,7 +33,13 @@ class AddProductImagesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        selectedProduct = arguments?.getParcelable<Products>("Product")!!
+
+
+        if (arguments?.containsKey("Product")!!) {
+
+            selectedProduct = arguments?.getParcelable<Products>("Product")!!
+        }
+
         root =  inflater.inflate(R.layout.fragment_add_product_images, container, false)
 
 
