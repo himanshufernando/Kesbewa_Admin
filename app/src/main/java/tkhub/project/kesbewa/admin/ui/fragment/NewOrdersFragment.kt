@@ -1505,20 +1505,26 @@ class NewOrdersFragment : Fragment() {
             .onCompleteCallback(object : MaildroidX.onCompleteCallback {
                 override val timeout: Long = 10000
                 override fun onSuccess() {
-                    Toast.makeText(
-                        requireContext(),
-                        "Invoice Email send to user",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    IonAlert(requireContext(), IonAlert.SUCCESS_TYPE)
+                        .setTitleText("SUCCESS !!")
+                        .setContentText("Invoice send to user")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
+                            sDialog.dismissWithAnimation()
+                        })
+                        .show()
+
                 }
 
                 override fun onFail(errorMessage: String) {
-                    println("ssssssssssssssssssssssssssssssss neworders send user : "+errorMessage)
-                    Toast.makeText(
-                        requireContext(),
-                        "Invoice Email NOT send to user $errorMessage",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    IonAlert(requireContext(), IonAlert.ERROR_TYPE)
+                        .setTitleText("ERROR !!")
+                        .setContentText("Invoice NOT send to user")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(IonAlert.ClickListener { sDialog ->
+                            sDialog.dismissWithAnimation()
+                        })
+                        .show()
                 }
             })
             .mail()

@@ -54,7 +54,7 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
     var citylist: ArrayList<City_v2> = ArrayList<City_v2>()
     private val adapter = InvoiceProductsAdapter()
     private val adapterAddedItems = CartItemAdapter()
-
+    var finalDelivery = 0.0
 
     lateinit var dialogProducts: Dialog
     var alertDialog: AlertDialog? = null
@@ -358,14 +358,14 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
                     orderDetails.itemlist = productlist
                     orderDetails.order_android_id = getAndroidid()
                     orderDetails.order_date = 44454
-                    orderDetails.order_delivery_chargers = deliveryCharges
+                    orderDetails.order_delivery_chargers = finalDelivery
                     orderDetails.order_discount = discount
                     orderDetails.order_dispatch_type = dispatchType
                     orderDetails.order_status = "0"
                     orderDetails.order_status_code = 0
                     orderDetails.order_store_location = storeLocation
                     orderDetails.order_subtotal_total = subtotal
-                    orderDetails.order_total_price = ((subtotal - discount) + delivery)
+                    orderDetails.order_total_price = ((subtotal - discount) + finalDelivery)
                     orderDetails.order_total_qty = totitemCount
                     orderDetails.order_user_id = usercode
                     orderDetails.user = customer
@@ -546,6 +546,8 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
         viewmodel.productsList.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is KesbewaResult.Success -> {
+
+
                     var list = response.data
                     var sortList = list.sortedBy { it.pro_sort }
 
@@ -1070,15 +1072,9 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
             totitemCount += item.pro_total_qty!!
             subtotal += item.pro_total_price!!
 
-
-            println("ssssssssssssssssssssssssssssss delivery pro_weight   "+item.pro_weight)
-            println("ssssssssssssssssssssssssssssss delivery pro_total_qty   "+ item.pro_total_qty)
-
-
             var itemkm = item.pro_weight!!* item.pro_total_qty!!
             totKellow += itemkm.toInt()
 
-            println("ssssssssssssssssssssssssssssss delivery totKellow   "+ totKellow)
 
         }
 
@@ -1086,12 +1082,14 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
         var additnalKg = totKellow/1000.toInt()
 
 
+
+
         if(additnalKg!=0){
             deliverChargesPerkellow = (additnalKg * 50).toDouble()
         }
 
 
-        var finalDelivery = 0.0
+
         if(delivery !=0.0){
             finalDelivery = delivery + deliverChargesPerkellow
         }
@@ -1101,12 +1099,16 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
         textview_discount.text = discount.toString()
         textview_delivery.text = finalDelivery.toString()
         textview_subtotal.text = subtotal.toString()
-        textview_needtopay.text = ((subtotal - discount) + delivery).toString()
+        textview_needtopay.text = ((subtotal - discount) + finalDelivery).toString()
+
+
+
+
     }
 
     private fun getAdminUsers(){
 
-        println("ssssssssssssssssssssssssssssssssss getAdminUsers ")
+
         layout_loading_invoice.visibility = View.VISIBLE
 
         adminUsersRef?.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -1116,12 +1118,12 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
                     val post = postSnapshot.getValue(AdminUsersRespons::class.java)
                     list.add(post!!)
 
-                    println("ssssssssssssssssssssssssssssssssss post "+post)
+
 
                 }
 
 
-                println("ssssssssssssssssssssssssssssssssss AdminUsersAdapter ")
+
                 val adapter = AdminUsersAdapter(requireContext(), R.layout.item_auto_complete_text_view, list)
                 edittext_1s.setAdapter(adapter)
                 edittext_1s.threshold = 1

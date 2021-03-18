@@ -14,8 +14,8 @@ android {
         applicationId "tkhub.project.kesbewa.admin"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 16
-        versionName "1.1.6"
+        versionCode 17
+        versionName "1.1.7"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -16684,5 +16684,14 @@
     "latitude": "6.910833",
     "longitude": "79.887836",
     "area": "A"
+  },
+  {
+    "id": "1860",
+    "district_id": "5",
+    "name_en": "Pepiliyana",
+    "postcode": "10290",
+    "latitude": "6.910833",
+    "longitude": "79.887836",
+    "area": "B"
   }
 ]

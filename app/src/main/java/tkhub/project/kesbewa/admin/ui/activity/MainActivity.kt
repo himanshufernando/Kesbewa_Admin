@@ -270,19 +270,15 @@ class MainActivity : FragmentActivity() ,NavigationView.OnNavigationItemSelected
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var list = ArrayList<Products>()
 
-
-
-             /*   for (postSnapshot in dataSnapshot.children) {
+                for (postSnapshot in dataSnapshot.children) {
                     val post = postSnapshot.getValue(Products::class.java)
-
-
 
                     list.add(post!!)
                     GlobalScope.launch(Dispatchers.IO) {
                         productsDAO.insertProducts(post)
                     }
 
-                }*/
+                }
 
             }
 
