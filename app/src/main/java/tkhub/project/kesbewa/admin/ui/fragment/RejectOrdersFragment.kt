@@ -925,8 +925,8 @@ class RejectOrdersFragment : Fragment() {
             }
 
 
-            //   sendAdminKesbewa(targetPdf,orderRespons)
-            //    sendAdminAshan(targetPdf,orderRespons)
+               sendAdminKesbewa(targetPdf,orderRespons)
+               sendAdminAshan(targetPdf,orderRespons)
             //  sendAdminCharith(targetPdf,orderRespons)
             sendUser(targetPdf,orderRespons)
             sendAdminHimanshu(targetPdf,orderRespons)

@@ -550,13 +550,11 @@ class NewOrdersFragment : Fragment() {
                 }
 
 
-
-
                 var total = orderRespons.order_total_price + delivery_charges
 
                 var hashMap: HashMap<String, Any> = HashMap<String, Any>()
 
-                hashMap["order_delivery_chargers"] =delivery_charges
+                hashMap["order_delivery_chargers"] = delivery_charges
                 hashMap["order_dispatch_type"] = "DELIVERY"
                 hashMap["order_total_price"] = total
                 hashMap["order_store_location"] = ""
@@ -581,8 +579,6 @@ class NewOrdersFragment : Fragment() {
                         ).show()
                         orderEdit.dismiss()
                     }
-
-
 
 
             }
@@ -1094,14 +1090,14 @@ class NewOrdersFragment : Fragment() {
 
         }
 
-       /* if (orderRespons.itemlist.size <= 5) {
-            pdfFooterCreator(canvas, paint, orderRespons, dynimcY)
-        } else {
-            pdfFooterCreator(canvas, paint, orderRespons)
-        }*/
+        /* if (orderRespons.itemlist.size <= 5) {
+             pdfFooterCreator(canvas, paint, orderRespons, dynimcY)
+         } else {
+             pdfFooterCreator(canvas, paint, orderRespons)
+         }*/
 
 
-       // pdfFooterCreator(canvas, paint, orderRespons, dynimcY)
+        // pdfFooterCreator(canvas, paint, orderRespons, dynimcY)
         pdfFooterCreator(canvas, paint, orderRespons)
 
         document.finishPage(page)
@@ -1364,7 +1360,7 @@ class NewOrdersFragment : Fragment() {
                     "<div style=\"border: 0px solid transparent; padding: 15px 10px 15px 10px;\"><!--<![endif]--> <!-- [if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: 'Trebuchet MS', Tahoma, sans-serif\"><![endif]-->\n" +
                     "<div style=\"color: #ffffff; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; line-height: 1.2; padding: 5px 10px 5px 10px;\">\n" +
                     "<div class=\"txtTinyMce-wrapper\" style=\"line-height: 1.2; font-size: 12px; font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; color: #ffffff; mso-line-height-alt: 14px;\">\n" +
-                    "<p style=\"font-size: 14px; line-height: 1.2; word-break: break-word; text-align: left; font-family: Montserrat, 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;\"><strong><span style=\"font-size: 24px;\">Your Order is confirmed - "+orderID+"</span></strong></p>\n" +
+                    "<p style=\"font-size: 14px; line-height: 1.2; word-break: break-word; text-align: left; font-family: Montserrat, 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif; mso-line-height-alt: 17px; margin: 0;\"><strong><span style=\"font-size: 24px;\">Your Order is confirmed - " + orderID + "</span></strong></p>\n" +
                     "</div>\n" +
                     "</div>\n" +
                     "<!-- [if mso]></td></tr></table><![endif]--> <!-- [if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: 'Trebuchet MS', Tahoma, sans-serif\"><![endif]-->\n" +
@@ -1478,7 +1474,6 @@ class NewOrdersFragment : Fragment() {
 
             sendAdminKesbewa(targetPdf, orderRespons)
             sendAdminAshan(targetPdf, orderRespons)
-            sendAdminCharith(targetPdf, orderRespons)
             sendUser(targetPdf, orderRespons)
             sendAdminHimanshu(targetPdf, orderRespons)
 
@@ -1492,10 +1487,10 @@ class NewOrdersFragment : Fragment() {
 
 
         MaildroidX.Builder()
-            .smtp("mail.kesbewa.com")
+            .smtp("node236.r-usdatacenter.register.lk")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
-            .port("465")
+            .port("587")
             .type(MaildroidXType.HTML)
             .to(orderRespons.user.user_email.toString())
             .from("no-reply@kesbewa.com")
@@ -1517,6 +1512,7 @@ class NewOrdersFragment : Fragment() {
                 }
 
                 override fun onFail(errorMessage: String) {
+
                     IonAlert(requireContext(), IonAlert.ERROR_TYPE)
                         .setTitleText("ERROR !!")
                         .setContentText("Invoice NOT send to user")
@@ -1533,7 +1529,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminHimanshu(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("mail.kesbewa.com")
+            .smtp("node236.r-usdatacenter.register.lk")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1566,7 +1562,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminCharith(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("mail.kesbewa.com")
+            .smtp("node236.r-usdatacenter.register.lk")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1591,7 +1587,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminAshan(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("mail.kesbewa.com")
+            .smtp("node236.r-usdatacenter.register.lk")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
@@ -1615,7 +1611,7 @@ class NewOrdersFragment : Fragment() {
 
     fun sendAdminKesbewa(path: String, orderRespons: OrderRespons) {
         MaildroidX.Builder()
-            .smtp("mail.kesbewa.com")
+            .smtp("node236.r-usdatacenter.register.lk")
             .smtpUsername("no-reply@kesbewa.com")
             .smtpPassword("]U7~Ruq0V8fV")
             .port("465")
