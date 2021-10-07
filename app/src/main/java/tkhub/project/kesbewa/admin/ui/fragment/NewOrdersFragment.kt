@@ -27,7 +27,8 @@ import androidx.navigation.findNavController
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
 import coil.ImageLoader
-import coil.request.LoadRequest
+import coil.request.ImageRequest
+
 import coil.size.Scale
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -403,7 +404,7 @@ class NewOrdersFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -418,7 +419,7 @@ class NewOrdersFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

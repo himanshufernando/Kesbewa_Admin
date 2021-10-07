@@ -23,7 +23,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import coil.ImageLoader
-import coil.request.LoadRequest
+
 import coil.size.Scale
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
@@ -32,11 +32,10 @@ import kotlinx.android.synthetic.main.fragment_confirmed_orders.view.*
 import androidx.lifecycle.Observer
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
-import com.google.firebase.storage.FirebaseStorage
+import coil.request.ImageRequest
+
 import com.google.firebase.storage.StorageReference
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
-import com.journeyapps.barcodescanner.BarcodeEncoder
+
 import tkhub.project.kesbewa.admin.data.responsmodel.KesbewaResult
 import tkhub.project.kesbewa.admin.R
 import tkhub.project.kesbewa.admin.data.models.NetworkError
@@ -302,7 +301,7 @@ class ConfirmedOrdersFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -317,7 +316,7 @@ class ConfirmedOrdersFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

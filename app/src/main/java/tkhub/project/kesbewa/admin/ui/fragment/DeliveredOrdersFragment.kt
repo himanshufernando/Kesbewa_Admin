@@ -29,7 +29,8 @@ import kotlinx.android.synthetic.main.fragment_delivered_orders.view.*
 import androidx.lifecycle.Observer
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
-import coil.request.LoadRequest
+import coil.request.ImageRequest
+
 import coil.size.Scale
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -288,7 +289,7 @@ class DeliveredOrdersFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -303,7 +304,7 @@ class DeliveredOrdersFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

@@ -24,7 +24,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import coil.ImageLoader
-import coil.request.LoadRequest
+import coil.request.ImageRequest
+
 import coil.size.Scale
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
@@ -67,7 +68,7 @@ class SearchOrdersFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_orders, container, false)
         binding.serachOrders = viewmodel
 
-        AppPrefs.setIntKeyValuePrefs(context!!, AppPrefs.KEY_FRAGMENT_ID,4)
+        AppPrefs.setIntKeyValuePrefs(requireContext(), AppPrefs.KEY_FRAGMENT_ID,4)
 
         binding.root.recyclerView_orrders.adapter = adapter
 
@@ -303,7 +304,7 @@ class SearchOrdersFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -318,7 +319,7 @@ class SearchOrdersFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

@@ -26,7 +26,8 @@ import kotlinx.android.synthetic.main.fragment_packed_orders.view.*
 import androidx.lifecycle.Observer
 import co.nedim.maildroidx.MaildroidX
 import co.nedim.maildroidx.MaildroidXType
-import coil.request.LoadRequest
+import coil.request.ImageRequest
+
 import coil.size.Scale
 import kotlinx.android.synthetic.main.dialog_customer_details.*
 import tkhub.project.kesbewa.admin.R
@@ -495,7 +496,7 @@ class PackedOrdersFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -510,7 +511,7 @@ class PackedOrdersFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

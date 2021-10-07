@@ -21,7 +21,8 @@ import androidx.fragment.app.viewModels
 import coil.ImageLoader
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import coil.request.LoadRequest
+import coil.request.ImageRequest
+
 import coil.size.Scale
 import com.google.gson.Gson
 import id.ionbit.ionalert.IonAlert
@@ -261,7 +262,7 @@ class DeliveryOrderFragment : Fragment() {
             .placeholder(R.drawable.ic_profile_users)
             .error(R.drawable.ic_profile_users)
             .build()
-        val request = LoadRequest.Builder(requireContext())
+        val request = ImageRequest.Builder(requireContext())
             .data(orderRespons.user.user_pro_pic)
             .target(
                 onStart = { placeholder ->
@@ -276,7 +277,7 @@ class DeliveryOrderFragment : Fragment() {
             )
             .scale(Scale.FILL)
             .build()
-        imageLoader.execute(request)
+        imageLoader.enqueue(request)
         dialogCustomer.show()
     }
 

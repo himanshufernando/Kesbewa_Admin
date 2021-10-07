@@ -21,7 +21,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import coil.api.load
+import coil.load
+
 import com.google.firebase.database.*
 import id.ionbit.ionalert.IonAlert
 
@@ -98,7 +99,7 @@ class InvoiceFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppPrefs.setIntKeyValuePrefs(context!!, AppPrefs.KEY_FRAGMENT_ID, 7)
+        AppPrefs.setIntKeyValuePrefs(requireContext(), AppPrefs.KEY_FRAGMENT_ID, 7)
 
         root.recyclerView_cart_items.adapter = adapterAddedItems
 
